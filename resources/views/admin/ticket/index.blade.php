@@ -6,8 +6,8 @@
 
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between">
-                <h5>DATA OBAT MASUK</h5>
-                <a class="btn btn-primary" href="{{ route('obat-masuk.create') }}">Tambah</a>
+                <h5>DATA TICKET</h5>
+                <a class="btn btn-primary" href="{{ route('ticket.create') }}">Tambah</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -15,39 +15,42 @@
                         <thead>
                             <tr>
                                 <th class="text-sm">No</th>
-                                <th class="text-sm">Nama Obat</th>
-                                <th class="text-sm">Supplier</th>
-                                <th class="text-sm">Satuan</th>
-                                <th class="text-sm">Stok Sebelum</th>
-                                <th class="text-sm">Stok masuk</th>
-                                <th class="text-sm">Total Stok</th>
-                                <th class="text-sm">Tanggal Masuk</th>
-                                @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'manager')
-                                    <th>Action</th>
-                                @endif
+                                <th class="text-sm">Nama Agent</th>
+                                {{-- <th class="text-sm">ID Nasa</th> --}}
+                                <th class="text-sm">Tanggal</th>
+                                <th class="text-sm">Nomer Ticket</th>
+                                <th class="text-sm">STO</th>
+                                <th class="text-sm">No Inet</th>
+                                <th class="text-sm">Notel</th>
+                                <th class="text-sm">Paket PCRF</th>
+                                {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'manager') --}}
+                                <th>Action</th>
+                                {{-- @endif --}}
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($obat_masuk as $no => $dt)
+                            @foreach ($tickets as $no => $dt)
                                 <tr>
                                     <td>{{ $no + 1 }}</td>
-                                    <td>{{ $dt->obat->nama }}</td>
-                                    <td>{{ $dt->supplier->nama }}</td>
-                                    <td>{{ $dt->satuan->satuan }}</td>
-                                    <td>{{ $dt->jumlah_sebelumnya }}</td>
-                                    <td>{{ $dt->jumlah }}</td>
-                                    <td>{{ $dt->total_stok }}</td>
+                                    <td>{{ $dt->agent->nama_depan . ' ' . $dt->agent->nama_belakang }}</td>
+                                    {{-- <td>{{ $dt->no_inet }}</td> --}}
                                     <td>{{ $dt->created_at }}</td>
-                                    @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'manager')
-                                        <td class="text-center">
-                                            <a href="{{ route('obat-masuk.edit', ['obat_masuk' => $dt->id]) }}"
-                                                id="btn-edit" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                            <button data-id="{{ $dt->id }}" id="btn-hapus"
-                                                class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                                            {{-- <button data-id="{{ $dt->id }}" id="btn-detail"
-                                            class="btn btn-info btn-sm"><i class="fa fa-info"></i></button> --}}
-                                        </td>
-                                    @endif
+                                    <td>{{ $dt->no_tiket }}</td>
+                                    <td>{{ $dt->sto }}</td>
+                                    <td>{{ $dt->no_inet }}</td>
+                                    <td>{{ $dt->nomer_hp }}</td>
+                                    <td>{{ $dt->paket_pcrf }}</td>
+                                    {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'manager') --}}
+                                    <td class="text-center">
+                                        <a href="{{ route('ticket.edit', $dt->id) }}" id="btn-edit"
+                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                                        <button data-id="{{ $dt->id }}" id="btn-hapus"
+                                            class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                        <a href="{{ route('ticket.afterExecution', $dt->id) }}" id="btn-edit"
+                                            class="btn btn-primary btn-sm"><i class="fas fa-door-closed"></i></a>
+
+                                    </td>
+                                    {{-- @endif --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -100,6 +103,45 @@
                 async: true
             })
 
+            $(document).on('click', '#btn-close', function() {
+                const id = $(this).data('id');
+                Swal.fire({
+                    title: 'Apakah Kamu Yakin?',
+                    text: "Kamu Akan Close Tiket Ini!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Close!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: `/ticket/close/${id}`,
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(hasil) {
+                                if (hasil) {
+                                    Swal.fire(
+                                        'sukses',
+                                        'sukses close tiket',
+                                        'success'
+                                    )
+                                } else {
+                                    Swal.fire(
+                                        'Gagal',
+                                        'gagal close tiket',
+                                        'error'
+                                    )
+                                }
+                                // setTimeout(() => {
+                                //     location.reload();
+                                // }, 800);
+                            }
+                        })
+                    }
+                })
+            })
+
             $(document).on('click', '#btn-hapus', function() {
                 const id = $(this).data('id');
                 Swal.fire({
@@ -113,7 +155,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: `/obat-masuk/${id}`,
+                            url: `/ticket/${id}`,
                             method: 'delete',
                             data: {
                                 "_token": "{{ csrf_token() }}",

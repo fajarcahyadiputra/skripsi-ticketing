@@ -13,7 +13,7 @@ class Userseeder extends Seeder
      * @return void
      */
 
-     //     1. agent hanya bisa buka di user dia sendiri
+     //1. agent hanya bisa buka di user dia sendiri
 // 2. ⁠manajer all akses
 // 3. ⁠tim analis all akses
 // 4. ⁠officer all akses

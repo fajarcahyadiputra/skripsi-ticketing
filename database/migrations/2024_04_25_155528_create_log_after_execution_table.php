@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogExecutionTable extends Migration
+class CreateLogAfterExecutionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLogExecutionTable extends Migration
      */
     public function up()
     {
-        Schema::create('log_before_executions', function (Blueprint $table) {
+        Schema::create('log_after_executions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("ticket_id");
             $table->string("rx_olt",100);
@@ -47,7 +47,7 @@ class CreateLogExecutionTable extends Migration
             $table->softDeletes();
 
             $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
-        }); 
+        });
     }
 
     /**
@@ -57,6 +57,6 @@ class CreateLogExecutionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log_before_executions');
+        Schema::dropIfExists('log_after_executions');
     }
 }

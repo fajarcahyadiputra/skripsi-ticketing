@@ -7,7 +7,9 @@
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between">
                 <h5>DATA USER</h5>
-                <button data-toggle="modal" data-target="#modalTambahData" class="btn btn-success btn-sm">Tambah</button>
+                @if (auth()->user()->role == 'supervisor')
+                    <button data-toggle="modal" data-target="#modalTambahData" class="btn btn-success btn-sm">Tambah</button>
+                @endif
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -68,15 +70,15 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nama">Nama</label>
-                            <input type="type" name="nama" id="nama" class="form-control">
+                            <input required type="type" name="nama" id="nama" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="type" name="username" id="username" class="form-control">
+                            <label for="nik">NIK</label>
+                            <input type="type" name="nik" id="nik" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="level">Level</label>
-                            <select name="level" id="level" class="custom-select">
+                            <label for="level">Role</label>
+                            <select required name="level" id="level" class="custom-select">
                                 <option value="" disabled hidden selected>-- Piliih Role --</option>
                                 <option value="supervisor">Supervisor</option>
                                 <option value="agent">Apotoker</option>
@@ -87,25 +89,25 @@
                         </div>
                         <div class="form-group">
                             <label for="status_aktif">Status Aktif</label>
-                            <select name="status_aktif" id="status_aktif" class="custom-select">
+                            <select required name="status_aktif" id="status_aktif" class="custom-select">
                                 <option value="" disabled hidden selected>-- Piliih Status Aktif --</option>
                                 <option value="aktif">Aktif</option>
                                 <option value="tidak">Tidak</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="type" name="password" id="password" class="form-control">
-                        </div>
-                        <div class="form-group">
                             <label for="nomer_tlpn">Nomer Telepon</label>
-                            <input type="type" name="text" id="nomer_tlpn" class="form-control">
+                            <input required type="type" name="nomer_tlpn" id="nomer_tlpn" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="password_confirmation">Comfirm Password</label>
-                            <input type="password" id="password_confirmation" name="password_confirmation"
-                                class="form-control">
+                            <label for="password">Password</label>
+                            <input required type="type" name="password" id="password" class="form-control">
                         </div>
+                        {{-- <div class="form-group">
+                            <label for="password_confirmation">Comfirm Password</label>
+                            <input required type="text" id="password_confirmation" name="password_confirmation"
+                                class="form-control">
+                        </div> --}}
                         <div class="form-group">
                             <label for="avatar">Avatar</label>
                             <input type="file" name="avatar" id="avatar" class="form-control">
@@ -175,7 +177,7 @@
                 async: true
             })
             //add data
-            $(document).on('submit', '#formTambah', function(e) {
+            $(document).on('submit', '#formTambah', async function(e) {
                 e.preventDefault();
                 const data = new FormData(document.querySelector('#formTambah'));
 
@@ -190,62 +192,65 @@
                     return false;
                 }
 
-                checkEmail($('#email').val());
-                $.ajax({
-                    url: '/user',
-                    data: data,
-                    dataType: 'json',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    async: true,
-                    type: 'post',
-                    success: function(hasil) {
-                        if (hasil) {
-                            $('#modalTambah').modal('hide')
-                            Swal.fire(
-                                'sukses',
-                                'sukses menambah data',
-                                'success'
-                            )
-                        } else {
-                            Swal.fire(
-                                'Gagal',
-                                'gagal menambah data',
-                                'error'
-                            )
-                        }
-                        setTimeout(() => {
-                            location.reload();
-                        }, 800);
-                    }
-                })
-            })
-            //end
 
-            //check email 
-            function checkEmail(email) {
-                $.ajax({
+                await $.ajax({
                     url: `/user`,
                     method: 'post',
                     data: {
                         "_token": "{{ csrf_token() }}",
-                        email,
-                        checkEmail: true
+                        nik: $('#nik').val(),
+                        checknik: true
                     },
                     dataType: 'json',
                     success: function(hasil) {
                         if (hasil) {
                             Swal.fire(
                                 'Opss',
-                                'email already exists',
+                                'nik already exists',
                                 'warning'
                             )
                             return false;
+                        } else {
+                            $.ajax({
+                                url: '/user',
+                                data: data,
+                                dataType: 'json',
+                                processData: false,
+                                contentType: false,
+                                cache: false,
+                                async: true,
+                                type: 'post',
+                                success: function(hasil) {
+                                    if (hasil) {
+                                        $('#modalTambah').modal('hide')
+                                        Swal.fire(
+                                            'sukses',
+                                            'sukses menambah data',
+                                            'success'
+                                        )
+                                    } else {
+                                        Swal.fire(
+                                            'Gagal',
+                                            'gagal menambah data',
+                                            'error'
+                                        )
+                                    }
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 800);
+
+
+                                }
+                            })
                         }
                     }
                 })
-            }
+
+
+
+            })
+            //end
+
 
             $(document).on('click', '#btn-hapus', function() {
                 const id = $(this).data('id');
@@ -302,16 +307,16 @@
                     <div class="modal-body">
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="type" name="nama" id="nama" value="${hasil.nama}" class="form-control">
+                        <input required type="type" name="nama" id="nama" value="${hasil.nama}" class="form-control">
                         <input type="hidden" id="id" value="${hasil.id}">
                     </div>
                     <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="type" name="username" id="username" value="${hasil.username}" class="form-control">
-                    </div>
+                            <label for="nik">NIK</label>
+                            <input required type="type" name="nik" id="nik"  value="${hasil.nik}" class="form-control">
+                        </div>
                     <div class="form-group">
                         <label for="Role">Role</label>
-                        <select name="role" id="role" class="custom-select">
+                        <select required name="role" id="role" class="custom-select">
                             <option value="" disabled hidden selected>-- Piliih Role --</option>
                             <option  ${hasil.role === 'supervisor'?'selected':''} value="supervisor">Supervisor</option>
                             <option  ${hasil.role === 'agent'?'selected':''} value="agent">Apotoker</option>
@@ -322,7 +327,7 @@
                     </div>
                     <div class="form-group">
                         <label for="status_aktif">Status Aktif</label>
-                        <select name="status_aktif" id="status_aktif" class="custom-select">
+                        <select required name="status_aktif" id="status_aktif" class="custom-select">
                             <option value="" disabled hidden selected>-- Piliih Status Aktif --</option>
                             <option ${hasil.status_aktif === 'aktif'?'selected':''} value="aktif">Aktif</option>
                             <option ${hasil.status_aktif === 'tidak'?'selected':''} value="tidak">Tidak</option>
@@ -330,7 +335,7 @@
                     </div>
                     <div class="form-group">
                             <label for="nomer_tlpn">Nomer Telepon</label>
-                            <input type="type" name="text" id="nomer_tlpn" value="${hasil.nomer_tlpn}" class="form-control">
+                            <input required type="type" name="text" id="nomer_tlpn" value="${hasil.nomer_tlpn}" class="form-control">
                         </div>
                     <div class="form-group">
                         <label class="d-block">Image</label>

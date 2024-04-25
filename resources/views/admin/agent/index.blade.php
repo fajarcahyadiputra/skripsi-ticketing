@@ -29,6 +29,11 @@
                         </thead>
                         <tbody>
                             @foreach ($agents as $no => $dt)
+                                @php
+                                    $totalTiket = \App\Models\Ticket::where('agent_id', $dt->id)
+                                        ->get()
+                                        ->count();
+                                @endphp
                                 <tr>
                                     <td>{{ $no + 1 }}</td>
                                     <td>{{ $dt->nama_depan . ' ' . $dt->nama_belakang }}</td>
@@ -37,7 +42,7 @@
                                     <td>{{ $dt->perusahaan }}</td>
                                     <td>{{ $dt->user->nama }}</td>
                                     <td>{{ $dt->user->nama }}</td>
-                                    <td>1</td>
+                                    <td>{{ $totalTiket }}</td>
                                     {{-- @if (auth()->user()->role == 'kasir' || auth()->user()->role == 'manager') --}}
                                     <td class="text-center">
                                         <button data-id="{{ $dt->id }}" id="btn-edit"
@@ -99,6 +104,10 @@
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input required type="type" name="email" id="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input required type="type" name="password" id="password" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="tanggal_lahir">Tanggal Lahir</label>
@@ -184,50 +193,76 @@
                 e.preventDefault();
                 const data = $(this).serialize();
 
-                $.ajax({
-                    url: '/agent',
-                    data: data,
-                    dataType: 'json',
-                    type: 'post',
-                    success: function(hasil) {
-                        if (hasil) {
-                            $('#modalTambah').modal('hide')
-                            Swal.fire(
-                                'sukses',
-                                'sukses menambah data',
-                                'success'
-                            )
-                        } else {
-                            Swal.fire(
-                                'Gagal',
-                                'gagal menambah data',
-                                'error'
-                            )
-                        }
-                        setTimeout(() => {
-                            location.reload();
-                        }, 800);
-                    }
-                })
-            })
-            //end
 
-            //check email 
-            function checkEmail(email) {
                 $.ajax({
                     url: `/user`,
                     method: 'post',
                     data: {
                         "_token": "{{ csrf_token() }}",
-                        email,
-                        checkEmail: true
+                        nik,
+                        checknik: true
                     },
                     dataType: 'json',
                     success: function(hasil) {
                         if (hasil) {
                             Swal.fire(
                                 'Opss',
-                                'email already exists',
+                                'nik already exists',
+                                'warning'
+                            )
+                            return false;
+                        } else {
+
+                            $.ajax({
+                                url: '/agent',
+                                data: data,
+                                dataType: 'json',
+                                type: 'post',
+                                success: function(hasil) {
+                                    if (hasil) {
+                                        $('#modalTambah').modal('hide')
+                                        Swal.fire(
+                                            'sukses',
+                                            'sukses menambah data',
+                                            'success'
+                                        )
+                                    } else {
+                                        Swal.fire(
+                                            'Gagal',
+                                            'gagal menambah data',
+                                            'error'
+                                        )
+                                    }
+
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 800);
+                                }
+                            })
+                        }
+                    }
+                })
+
+
+            })
+            //end
+
+            //check nik 
+            checkNIK(nik) {
+                $.ajax({
+                    url: `/user`,
+                    method: 'post',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        nik,
+                        checknik: true
+                    },
+                    dataType: 'json',
+                    success: function(hasil) {
+                        if (hasil) {
+                            Swal.fire(
+                                'Opss',
+                                'nik already exists',
                                 'warning'
                             )
                             return false;

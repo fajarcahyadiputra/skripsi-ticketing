@@ -1,8 +1,8 @@
 <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" style="background-color: skyblue;"
-            href="/">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" style="background-color: red;"
+            href="/home">
             <div class="sidebar-brand-text mx-2 "><img width="150" src="{{ URL::asset('foto/logo.png') }}" alt=""
                     srcset=""></div>
         </a>
@@ -22,8 +22,7 @@
         @endif --}}
         <hr class="sidebar-divider">
 
-        @if (auth()->user()->role == 'agent' ||
-                auth()->user()->role == 'manajer' ||
+        @if (auth()->user()->role == 'manajer' ||
                 auth()->user()->role == 'tim_analis' ||
                 auth()->user()->role == 'officier' ||
                 auth()->user()->role == 'supervisor')
@@ -34,8 +33,7 @@
             </li>
             <hr class="sidebar-divider">
         @endif
-        @if (auth()->user()->role == 'agent' ||
-                auth()->user()->role == 'manajer' ||
+        @if (auth()->user()->role == 'manajer' ||
                 auth()->user()->role == 'tim_analis' ||
                 auth()->user()->role == 'officier' ||
                 auth()->user()->role == 'supervisor')
@@ -172,7 +170,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
             <!-- TopBar -->
-            <nav style="background-color: skyblue;"
+            <nav style="background-color: red;"
                 class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
                 <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
                     <i class="fa fa-bars"></i>

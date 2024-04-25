@@ -11,21 +11,21 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::where("role","!=", "agent")->get();
         return view('admin.user.index_user', compact('users'));
     }
     //store membuat data baru
     public function store(Request $request)
     {
         $data = $request->except('_token');
-        if ($request->input('checkEmail')) {
-            $user = User::where('email', $request->input('email'))->exists();
+        if ($request->input('checknik')) {
+            $user = User::where('nik', $request->input('nik'))->exists();
             return response()->json($user);
         }
         $rule = [
             'nama' => 'required|string',
-            'email' => 'required|email',
-            'password' => 'required|confirmed',
+            // 'nik' => 'required|nik',
+            'password' => 'required|password',
             'avatar' => 'mimes:jpg,png,jpeg,gift|max:2000|required'
         ];
 
@@ -48,9 +48,10 @@ class UserController extends Controller
 
         $newUser = User::create([
             'nama' => $data['nama'],
-            'email' => $data['email'],
+            'nik' => $data['nik'],
             'password' => $data['password'],
             'role' => $data['level'],
+            'nomer_tlpn' => $data['nomer_tlpn'],
             'avatar' => $data['avatar']
         ]);
         if ($newUser) {
@@ -69,8 +70,8 @@ class UserController extends Controller
         $user = User::find($id);
         $rule = [
             'nama' => 'required|string',
-            'email' => 'required|email',
-            'password' => 'required|confirmed',
+            'nik' => 'required|nik',
+            'password' => 'required|password',
             'avatar' => 'mimes:jpg,png,jpeg,gift|max:2000|required'
         ];
         $data = $request->except('_token');
