@@ -110,4 +110,25 @@ class UserController extends Controller
             return response()->json(true);
         }
     }
+    public function checkPassword(Request $request) {
+        $user = User::find($request->input("user_id"));
+        if($user) {
+            $isMatch = Hash::check($request->input("password_lama"), $user->password);
+            if($isMatch) {
+                return response()->json(true);
+            }else{
+                return response()->json(false);
+            }
+        }
+    }
+    public function updatePassword(Request $request) {
+        $data = $request->except("_token");
+        $user = User::find($request->input("user_id"));
+        $user->fill(["password" => bcrypt($data["password"])]);
+        if ($user->save()) {
+            return response()->json(true);
+        } else {
+            return response()->json(false);
+        }
+    }
 }

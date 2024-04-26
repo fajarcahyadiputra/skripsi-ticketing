@@ -41,6 +41,8 @@
                                             class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
                                         <button data-id="{{ $dt->id }}" id="btn-hapus"
                                             class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button data-id="{{ $dt->id }}" id="btn-change-password"
+                                            class="btn btn-warning btn-sm"><i class="fas fa-unlock-alt"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -55,6 +57,22 @@
 @stop
 
 @section('modal')
+    <!-- Modal change password -->
+    <div class="modal fade" id="modalUbahPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formUbahPassword" method="post">
+
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Modal tambah -->
     <div class="modal fade" id="modalTambahData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -103,11 +121,10 @@
                             <label for="password">Password</label>
                             <input required type="type" name="password" id="password" class="form-control">
                         </div>
-                        {{-- <div class="form-group">
+                        <div class="form-group">
                             <label for="password_confirmation">Comfirm Password</label>
-                            <input required type="text" id="password_confirmation" name="password_confirmation"
-                                class="form-control">
-                        </div> --}}
+                            <input required type="text" id="password_confirmation" class="form-control">
+                        </div>
                         <div class="form-group">
                             <label for="avatar">Avatar</label>
                             <input type="file" name="avatar" id="avatar" class="form-control">
@@ -187,6 +204,14 @@
                     Swal.fire(
                         'Opss',
                         'extensi file anda salah',
+                        'warning'
+                    )
+                    return false;
+                }
+                if ($('#password_confirmation').val() != $("#password").val()) {
+                    Swal.fire(
+                        'Opss',
+                        'Password tidak sama',
                         'warning'
                     )
                     return false;
@@ -294,8 +319,10 @@
                     }
                 })
             })
+
+
             //btn show data
-            $(document).on('click', '#btn-edit', function() {
+            $(document).on('click', '#btn show data', function() {
                 const id = $(this).data('id');
                 $.ajax({
                     url: `/user/${id}`,
@@ -307,43 +334,13 @@
                     <div class="modal-body">
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input required type="type" name="nama" id="nama" value="${hasil.nama}" class="form-control">
+                        <input required type="type" name="nama" id="nama" value="" class="form-control">
                         <input type="hidden" id="id" value="${hasil.id}">
                     </div>
                     <div class="form-group">
                             <label for="nik">NIK</label>
                             <input required type="type" name="nik" id="nik"  value="${hasil.nik}" class="form-control">
-                        </div>
-                    <div class="form-group">
-                        <label for="Role">Role</label>
-                        <select required name="role" id="role" class="custom-select">
-                            <option value="" disabled hidden selected>-- Piliih Role --</option>
-                            <option  ${hasil.role === 'supervisor'?'selected':''} value="supervisor">Supervisor</option>
-                            <option  ${hasil.role === 'agent'?'selected':''} value="agent">Apotoker</option>
-                            <option  ${hasil.role === 'manajer'?'selected':''} value="manajer">Manajer</option>
-                            <option  ${hasil.role === 'tim_analis'?'selected':''} value="tim_analis">Tim Analis</option>
-                            <option  ${hasil.role === 'officer'?'selected':''} value="officer">Officer</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="status_aktif">Status Aktif</label>
-                        <select required name="status_aktif" id="status_aktif" class="custom-select">
-                            <option value="" disabled hidden selected>-- Piliih Status Aktif --</option>
-                            <option ${hasil.status_aktif === 'aktif'?'selected':''} value="aktif">Aktif</option>
-                            <option ${hasil.status_aktif === 'tidak'?'selected':''} value="tidak">Tidak</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                            <label for="nomer_tlpn">Nomer Telepon</label>
-                            <input required type="type" name="text" id="nomer_tlpn" value="${hasil.nomer_tlpn}" class="form-control">
-                        </div>
-                    <div class="form-group">
-                        <label class="d-block">Image</label>
-                        <img class="d-block" width="150" src="{{ env('APP_URL') }}${hasil.avatar}" alt="image sub">
-                        <div id="box-image">
-                            <button type="button" id="btn-edit-image" class="mt-2 btn btn-primary btn-sm">Ganti gambar</button>
-                        </div>
-                    </div>
+                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -359,6 +356,93 @@
                         $('#modalEdit').modal('show');
                     }
                 })
+            })
+            //show modal update password
+            $(document).on("click", "#btn-change-password", function(e) {
+                const id = $(this).data('id');
+
+                $("#formUbahPassword").html(`@csrf()
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="password_lama">Password Lama</label>
+                            <input required type="type" name="password_lama" id="password_lama" class="form-control">
+                            <input required type="hidden" name="user_id" value="${id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password Baru</label>
+                            <input type="type" name="password" id="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation">Konfirmasi Password</label>
+                            <input type="type" name="password_confirmation" id="password_confirmation"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>`)
+                $("#modalUbahPassword").modal("show")
+            })
+            //update password
+            $(document).on('submit', '#formUbahPassword', function(e) {
+                e.preventDefault();
+                const id = $(this).data('id');
+
+                let data = $(this).serialize()
+
+                $.ajax({
+                    url: `{{ route('checkPassword') }}`,
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function(isMatch) {
+
+                        if (isMatch) {
+                            if ($('#password_confirmation').val() != $("#password").val()) {
+                                Swal.fire(
+                                    'Opss',
+                                    'Password tidak sama',
+                                    'warning'
+                                )
+                                return false;
+                            } else {
+                                $.ajax({
+                                    url: `{{ route('updatePassword') }}`,
+                                    data: data,
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    success: function(hasil) {
+                                        if (hasil) {
+                                            $('#modalUbahPassword').modal('hide')
+                                            Swal.fire(
+                                                'sukses',
+                                                'sukses ubah password',
+                                                'success'
+                                            )
+                                        } else {
+                                            Swal.fire(
+                                                'Gagal',
+                                                'gagal ubah password',
+                                                'error'
+                                            )
+                                        }
+                                    }
+                                })
+                            }
+
+                        } else {
+                            Swal.fire(
+                                'Opss',
+                                'Password lama tidak sesuai',
+                                'warning'
+                            )
+                            return false;
+                        }
+                    }
+                })
+
+
             })
             //edit data
             $(document).on('submit', '#formEditData', function(e) {

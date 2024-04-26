@@ -197,6 +197,7 @@
                                     Logout
                                 </button>
                             </form>
+                            <a href="">Profile</a>
                         </div>
                     </li>
                 </ul>

@@ -12,7 +12,41 @@
                 <div style="width: 700px; height:500px">
                     <canvas id="myChart"></canvas>
                 </div>
-
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" id="datatable">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>NIK</th>
+                                <th>Email</th>
+                                <th>perusahaan</th>
+                                <th>Kordinator</th>
+                                <th>Manajer</th>
+                                <th>Summery Ticket</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($agents as $no => $dt)
+                                @php
+                                    $totalTiket = \App\Models\Ticket::where('agent_id', $dt->id)
+                                        ->get()
+                                        ->count();
+                                @endphp
+                                <tr>
+                                    <td>{{ $no + 1 }}</td>
+                                    <td>{{ $dt->nama_depan . ' ' . $dt->nama_belakang }}</td>
+                                    <td>{{ $dt->nik }}</td>
+                                    <td>{{ $dt->email }}</td>
+                                    <td>{{ $dt->perusahaan }}</td>
+                                    <td>{{ $dt->user->nama }}</td>
+                                    <td>{{ $dt->user->nama }}</td>
+                                    <td>{{ $totalTiket }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

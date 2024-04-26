@@ -35,7 +35,10 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::group(['middleware' => ['auth', 'permision']], function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/user', UserController::class);
+    Route::post('/user/check-password', [UserController::class, 'checkPassword'])->name("checkPassword");
+    Route::post('/user/update-password', [UserController::class, 'updatePassword'])->name("updatePassword");
     Route::post('/user/{id}', [UserController::class, 'update']);
+    
 
     Route::resource('/agent', AgentController::class);
     Route::resource("/ticket", TicketController::class, ['except' => 'show']);

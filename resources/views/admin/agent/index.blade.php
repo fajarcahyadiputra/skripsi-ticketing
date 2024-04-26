@@ -49,6 +49,8 @@
                                             class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
                                         <button data-id="{{ $dt->id }}" id="btn-hapus"
                                             class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button data-id="{{ $dt->user_id }}" id="btn-change-password"
+                                            class="btn btn-warning btn-sm"><i class="fas fa-unlock-alt"></i></button>
                                     </td>
                                     {{-- @endif --}}
                                 </tr>
@@ -64,6 +66,22 @@
 @stop
 
 @section('modal')
+    <!-- Modal change password -->
+    <div class="modal fade" id="modalUbahPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formUbahPassword" method="post">
+
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Modal tambah -->
     <div class="modal fade" id="modalTambahData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -247,29 +265,6 @@
             })
             //end
 
-            //check nik 
-            checkNIK(nik) {
-                $.ajax({
-                    url: `/user`,
-                    method: 'post',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        nik,
-                        checknik: true
-                    },
-                    dataType: 'json',
-                    success: function(hasil) {
-                        if (hasil) {
-                            Swal.fire(
-                                'Opss',
-                                'nik already exists',
-                                'warning'
-                            )
-                            return false;
-                        }
-                    }
-                })
-            }
 
             $(document).on('click', '#btn-hapus', function() {
                 const id = $(this).data('id');
@@ -407,6 +402,94 @@
                         }, 800);
                     }
                 })
+            })
+
+            //show modal update password
+            $(document).on("click", "#btn-change-password", function(e) {
+                const id = $(this).data('id');
+
+                $("#formUbahPassword").html(`@csrf()
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="password_lama">Password Lama</label>
+                            <input required type="type" name="password_lama" id="password_lama" class="form-control">
+                            <input required type="hidden" name="user_id" value="${id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password Baru</label>
+                            <input type="type" name="password" id="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation">Konfirmasi Password</label>
+                            <input type="type" name="password_confirmation" id="password_confirmation"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>`)
+                $("#modalUbahPassword").modal("show")
+            })
+            //update password
+            $(document).on('submit', '#formUbahPassword', function(e) {
+                e.preventDefault();
+                const id = $(this).data('id');
+
+                let data = $(this).serialize()
+
+                $.ajax({
+                    url: `{{ route('checkPassword') }}`,
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function(isMatch) {
+
+                        if (isMatch) {
+                            if ($('#password_confirmation').val() != $("#password").val()) {
+                                Swal.fire(
+                                    'Opss',
+                                    'Password tidak sama',
+                                    'warning'
+                                )
+                                return false;
+                            } else {
+                                $.ajax({
+                                    url: `{{ route('updatePassword') }}`,
+                                    data: data,
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    success: function(hasil) {
+                                        if (hasil) {
+                                            $('#modalUbahPassword').modal('hide')
+                                            Swal.fire(
+                                                'sukses',
+                                                'sukses ubah password',
+                                                'success'
+                                            )
+                                        } else {
+                                            Swal.fire(
+                                                'Gagal',
+                                                'gagal ubah password',
+                                                'error'
+                                            )
+                                        }
+                                    }
+                                })
+                            }
+
+                        } else {
+                            Swal.fire(
+                                'Opss',
+                                'Password lama tidak sesuai',
+                                'warning'
+                            )
+                            return false;
+                        }
+                    }
+                })
+
+
             })
         })
     </script>
