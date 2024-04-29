@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth', 'permision']], function () {
     Route::post('/user/check-password', [UserController::class, 'checkPassword'])->name("checkPassword");
     Route::post('/user/update-password', [UserController::class, 'updatePassword'])->name("updatePassword");
     Route::post('/user/{id}', [UserController::class, 'update']);
+    Route::get("/agent/profile/{id}", [AgentController::class, "profile"])->name("detailProfil");
     
 
     Route::resource('/agent', AgentController::class);

@@ -80,4 +80,8 @@ class AgentController extends Controller
             return response()->json(false);
         }
     }
+    public function profile($id, Request $request) {
+        $agent = Agent::where("user_id", $id)->first();
+        return view('admin.agent.profile', compact('agent'));
+    }
 }

@@ -39,7 +39,7 @@
                 auth()->user()->role == 'supervisor')
             <li class="nav-item {{ request()->is('obat') ? 'active' : '' }}">
                 <a class="nav-link {{ request()->is('obat') ? 'text-primary' : '' }}" href="/agent">
-                    <i class="fas fa-pills"></i>
+                    <i class="fas fa-users"></i>
                     <span>Agent</span></a>
             </li>
             <hr class="sidebar-divider">
@@ -68,101 +68,6 @@
 
         <hr class="sidebar-divider">
 
-        {{-- @if (auth()->user()->role === 'sales')
-            <hr class="sidebar-divider">
-
-            <hr class="sidebar-divider">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
-                    aria-expanded="true" aria-controls="collapseBootstrap">
-                    <i class="far fa-fw fa-window-maximize"></i>
-                    <span>Transaksi</span>
-                </a>
-                <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ request()->is('order') ? 'text-primary' : '' }}"
-                            href="/order">Tambah Order</a>
-                    </div>
-                </div>
-            </li>
-
-            <hr class="sidebar-divider">
-        @endif
-
-        @if (auth()->user()->role === 'administrasi')
-            <hr class="sidebar-divider">
-            <li class="nav-item {{ request()->is('order') ? 'active' : '' }}">
-                <a class="nav-link {{ request()->is('order') ? 'text-primary' : '' }}" href="/order">
-                    <i class="fas fa-sitemap"></i>
-                    <span>Order</span></a>
-            </li>
-            <hr class="sidebar-divider">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
-                    aria-expanded="true" aria-controls="collapseBootstrap">
-                    <i class="far fa-fw fa-window-maximize"></i>
-                    <span>Transaksi</span>
-                </a>
-                <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ request()->is('barang-masuk') ? 'text-primary' : '' }}"
-                            href="/barang-masuk">Barang Masuk</a>
-                        <a class="collapse-item {{ request()->is('barang-keluar') ? 'text-primary' : '' }}"
-                            href="/barang-keluar">Barang Keluar</a>
-                    </div>
-                </div>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <li class="nav-item {{ request()->is('laporan') ? 'active' : '' }}">
-                <a class="nav-link {{ request()->is('laporan') ? 'text-primary' : '' }}" href="/laporan">
-                    <i class="fas fa-boxes"></i>
-                    <span>laporan</span></a>
-            </li>
-            <hr class="sidebar-divider">
-        @endif
-
-        @if (auth()->user()->role === 'gudang')
-            <hr class="sidebar-divider">
-            <li class="nav-item {{ request()->is('barang') ? 'active' : '' }}">
-                <a class="nav-link {{ request()->is('barang') ? 'text-primary' : '' }}" href="/barang">
-                    <i class="fas fa-sitemap"></i>
-                    <span>Barang</span></a>
-            </li>
-            <hr class="sidebar-divider">
-            <li class="nav-item {{ request()->is('order') ? 'active' : '' }}">
-                <a class="nav-link {{ request()->is('order') ? 'text-primary' : '' }}" href="/order">
-                    <i class="fas fa-sitemap"></i>
-                    <span>Order</span></a>
-            </li>
-            <hr class="sidebar-divider">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
-                    aria-expanded="true" aria-controls="collapseBootstrap">
-                    <i class="far fa-fw fa-window-maximize"></i>
-                    <span>Transaksi</span>
-                </a>
-                <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ request()->is('barang-keluar') ? 'text-primary' : '' }}"
-                            href="/barang-keluar">Barang Keluar</a>
-                    </div>
-                </div>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <li class="nav-item {{ request()->is('laporan') ? 'active' : '' }}">
-                <a class="nav-link {{ request()->is('laporan') ? 'text-primary' : '' }}" href="/laporan">
-                    <i class="fas fa-boxes"></i>
-                    <span>laporan</span></a>
-            </li>
-            <hr class="sidebar-divider">
-        @endif --}}
 
         <div class="version" id="version-ruangadmin"></div>
     </ul>
@@ -190,6 +95,10 @@
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
                             <div class="dropdown-divider"></div>
+                            @if (auth()->user()->role == 'agent')
+                                <a class="dropdown-item" href="{{ route('detailProfil', auth()->user()->id) }}"><i
+                                        class="fas fa-user-circle mr-2 text-gray-400"></i>Profile</a>
+                            @endif
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf
                                 <button class="dropdown-item" type="submit">
@@ -197,7 +106,7 @@
                                     Logout
                                 </button>
                             </form>
-                            <a href="">Profile</a>
+
                         </div>
                     </li>
                 </ul>

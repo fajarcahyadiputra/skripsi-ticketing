@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Halaman Tambah Obat')
+@section('title', 'Halaman Edit Tiket')
 
 @section('content')
     <div class="container-fluid" id="container-wrapper">

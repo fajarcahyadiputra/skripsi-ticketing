@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('title', 'Halaman Obat Masuk')
+@section('title', 'Halaman Tiket')
 @section('content')
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
@@ -44,7 +44,9 @@
                                     <td class="text-center">
                                         <a href="{{ route('ticket.edit', $dt->id) }}" id="btn-edit"
                                             class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                        <button data-id="{{ $dt->id }}" id="btn-hapus"
+                                        <button data-id="{{ $dt->id }}"
+                                            id="btn
+                                            hapus"
                                             class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                         <a href="{{ route('ticket.afterExecution', $dt->id) }}" id="btn-edit"
                                             class="btn btn-primary btn-sm"><i class="fas fa-door-closed"></i></a>
