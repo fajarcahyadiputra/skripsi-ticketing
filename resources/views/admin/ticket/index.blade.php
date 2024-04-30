@@ -23,6 +23,7 @@
                                 <th class="text-sm">No Inet</th>
                                 <th class="text-sm">Notel</th>
                                 <th class="text-sm">Paket PCRF</th>
+                                <th class="text-sm">Status</th>
                                 {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'manager') --}}
                                 <th>Action</th>
                                 {{-- @endif --}}
@@ -40,6 +41,7 @@
                                     <td>{{ $dt->no_inet }}</td>
                                     <td>{{ $dt->nomer_hp }}</td>
                                     <td>{{ $dt->paket_pcrf }}</td>
+                                    <td>{{ $dt->status_tiket }}</td>
                                     {{-- @if (auth()->user()->role == 'apoteker' || auth()->user()->role == 'manager') --}}
                                     <td class="text-center">
                                         <a href="{{ route('ticket.edit', $dt->id) }}" id="btn-edit"
@@ -49,7 +51,9 @@
                                             hapus"
                                             class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                         <a href="{{ route('ticket.afterExecution', $dt->id) }}" id="btn-edit"
-                                            class="btn btn-primary btn-sm"><i class="fas fa-door-closed"></i></a>
+                                            class="btn btn-warning btn-sm"><i class="fas fa-door-closed"></i></a>
+                                        <a href="{{ route('ticket.detail', $dt->id) }}" id="btn-edit"
+                                            class="btn btn-success btn-sm"><i class="fas fa-info"></i></a>
 
                                     </td>
                                     {{-- @endif --}}

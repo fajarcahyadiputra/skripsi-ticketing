@@ -29,7 +29,7 @@
             <li class="nav-item {{ request()->is('user') ? 'active' : '' }}">
                 <a class="nav-link {{ request()->is('user') ? 'text-primary' : '' }}" href="/user">
                     <i class="fas fa-users"></i>
-                    <span>Data Pengguna</span></a>
+                    <span>User Role</span></a>
             </li>
             <hr class="sidebar-divider">
         @endif
@@ -40,7 +40,7 @@
             <li class="nav-item {{ request()->is('obat') ? 'active' : '' }}">
                 <a class="nav-link {{ request()->is('obat') ? 'text-primary' : '' }}" href="/agent">
                     <i class="fas fa-users"></i>
-                    <span>Agent</span></a>
+                    <span>Supervisorplus</span></a>
             </li>
             <hr class="sidebar-divider">
         @endif

@@ -45,5 +45,6 @@ Route::group(['middleware' => ['auth', 'permision']], function () {
     Route::resource("/ticket", TicketController::class, ['except' => 'show']);
     Route::get("/ticket/after-execution/{id}", [TicketController::class, "afterExecution"])->name("ticket.afterExecution");
     Route::post("/ticket/after-execution", [TicketController::class, "storeAfterExecution"])->name("ticket.storeAfterExecution");
+    Route::get("/ticket/detail/{id}", [TicketController::class, "detail"])->name("ticket.detail");
     
 });

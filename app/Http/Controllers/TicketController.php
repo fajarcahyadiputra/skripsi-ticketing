@@ -151,4 +151,15 @@ class TicketController extends Controller
             //throw $th;
         }
     }
+    public function detail($id)
+    {
+        $ticket = Ticket::find($id);
+        $logExecution = LogBeforeExecution::where(["ticket_id" => $id])->first();
+        $logAfterExecution = LogAfterExecution::where(["ticket_id" => $ticket->id])->first();
+        $agents =Agent::all();
+        $listSTO = Ticket::listSTO();
+        $listAlasanDispatch = Ticket::listAlasanDispatch();
+
+        return view('admin.ticket.detail', compact('ticket', 'logExecution', 'agents','listSTO','listAlasanDispatch','logAfterExecution'));
+    }
 }
