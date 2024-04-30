@@ -48,8 +48,8 @@ class TicketController extends Controller
             return response()->json(true);
         } catch (\Throwable $th) {
             DB::rollback();
-            return response()->json(false);
-            // return response()->json($th->getMessage());
+            // return response()->json(false);
+            return response()->json($th->getMessage());
             // throw $th->getMessage();
         }
     }
@@ -146,8 +146,8 @@ class TicketController extends Controller
         return response()->json(true);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return response()->json(false);
-            // return response()->json($th->getMessage());
+            // return response()->json(false);
+            return response()->json($th->getMessage());
             //throw $th;
         }
     }

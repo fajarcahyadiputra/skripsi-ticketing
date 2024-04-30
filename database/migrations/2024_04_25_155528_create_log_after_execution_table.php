@@ -31,7 +31,7 @@ class CreateLogAfterExecutionTable extends Migration
             $table->string("ticket_draft", 50)->nullable();
             $table->string("ticket_queued", 50)->nullable();
             $table->string("rate_success", 100);
-            $table->string("alasan_dispatch", 100);
+            $table->string("alasan_dispatch", 100)->nullable();
             $table->string("eskalasi", 100);
             $table->string("action_solution", 100);
             $table->enum("wan_trafic", ["ok","nok","tidak bisa di ukur"]);

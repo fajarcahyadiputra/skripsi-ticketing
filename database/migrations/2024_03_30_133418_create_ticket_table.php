@@ -26,7 +26,7 @@ class CreateTicketTable extends Migration
             $table->enum("status_usetv", ["ok","nok","no"]);
             $table->enum("pusage_pcrf", ["ok","isoliran" ]);
             $table->enum("status_customer", ["enable","isoliran" ]);
-            $table->enum("status_tiket", ["close","onprogres","pending"]);
+            $table->enum("status_tiket", ["closed","dispatch","pending"]);
             $table->string("radius_package",100);
             $table->string("reference_profile",100); 
             $table->string("onu_type",100);
