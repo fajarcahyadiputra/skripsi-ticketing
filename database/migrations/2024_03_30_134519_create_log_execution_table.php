@@ -20,7 +20,7 @@ class CreateLogExecutionTable extends Migration
             $table->string("rx_onu",100);
             $table->string("temp_ont", 100);
             $table->enum("status_acs", ["ok","nok"]);
-            $table->string("wifi_config", 200);
+            $table->string("wifi_config", 100);
             $table->string("conn_state", 100);
             $table->string("ext_ip", 100);
             $table->integer("chanel_use");

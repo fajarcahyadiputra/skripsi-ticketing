@@ -17,15 +17,17 @@ class CreateTableAgent extends Migration
             $table->id();
             $table->unsignedBigInteger("user_id");
             $table->string("nik", 16);
-            $table->string("perusahaan", 200);
+            $table->string("perusahaan", 100);
             $table->string("email", 200)->nullable();
             $table->string("nomer_hp", 20);
             $table->text("domisili");
-            $table->string("nama_depan", 200);
-            $table->string("nama_belakang", 200);
+            $table->string("nama_depan", 100);
+            $table->string("jabatan", 100);
+            $table->string("jabatan", 100);
+            $table->string("kodinator", 100);
             $table->enum("jenis_kelamin", ["laki-laki","perempuan"]);
-            $table->string("tanggal_lahir", 200);
-            $table->string("manajer", 200);
+            $table->date("tanggal_lahir");
+            $table->string("manajer", 100);
             $table->timestamps();
             $table->softDeletes();
 

@@ -102,7 +102,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        unlink($user->avatar);
+        // unlink($user->avatar);
         if ($user) {
             $user->delete();
             return response()->json(true);

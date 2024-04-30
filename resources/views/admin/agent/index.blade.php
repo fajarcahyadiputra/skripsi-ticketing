@@ -235,9 +235,9 @@
                                         )
                                     }
 
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 800);
+                                    // setTimeout(() => {
+                                    //     location.reload();
+                                    // }, 800);
                                 }
                             })
                         }

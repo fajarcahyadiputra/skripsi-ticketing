@@ -28,12 +28,12 @@ class CreateTicketTable extends Migration
             $table->enum("status_customer", ["enable","isoliran" ]);
             $table->enum("status_tiket", ["close","onprogres","pending"]);
             $table->string("radius_package",100);
-            $table->string("reference_profile",200); 
-            $table->string("onu_type",200);
-            $table->string("version_id",200);
-            $table->string("current_profile",200);
-            $table->string("nama_model",200)->nullable();
-            $table->string("version",200)->nullable();
+            $table->string("reference_profile",100); 
+            $table->string("onu_type",100);
+            $table->string("version_id",100);
+            $table->string("current_profile",100);
+            $table->string("nama_model",100)->nullable();
+            $table->string("version",100)->nullable();
             $table->timestamps();
             $table->softDeletes();
 
