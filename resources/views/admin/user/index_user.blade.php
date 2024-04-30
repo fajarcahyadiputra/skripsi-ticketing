@@ -194,7 +194,7 @@
                 async: true
             })
             //add data
-            $(document).on('submit', '#formTambah', async function(e) {
+            $(document).on('submit', '#formTambah', function(e) {
                 e.preventDefault();
                 const data = new FormData(document.querySelector('#formTambah'));
 
@@ -218,7 +218,7 @@
                 }
 
 
-                await $.ajax({
+                $.ajax({
                     url: `/user`,
                     method: 'post',
                     data: {

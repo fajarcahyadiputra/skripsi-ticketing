@@ -194,14 +194,14 @@
             $(document).on('submit', '#formTambah', function(e) {
                 e.preventDefault();
                 const data = $(this).serialize();
-
+                // alert("okokokkoo")
 
                 $.ajax({
                     url: `/user`,
                     method: 'post',
                     data: {
                         "_token": "{{ csrf_token() }}",
-                        nik,
+                        nik: $('#nik').val(),
                         checknik: true
                     },
                     dataType: 'json',
@@ -214,7 +214,6 @@
                             )
                             return false;
                         } else {
-
                             $.ajax({
                                 url: '/agent',
                                 data: data,
@@ -302,7 +301,7 @@
                         console.log(hasil);
                         $(`#formEditData`).html(`
                     @csrf()
-=                        <div class="modal-body">
+                        <div class="modal-body">
                         <div class="form-group">
                             <label for="nik">NIK</label>
                             <input required type="type" name="nik" id="nik" class="form-control" value="${hasil.nik}">
