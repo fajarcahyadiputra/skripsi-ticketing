@@ -320,16 +320,14 @@
                 })
             })
 
-
-            //btn show data
             $(document).on('click', '#btn-edit', function() {
                 const id = $(this).data('id');
                 $.ajax({
-                    url:" /user/${id}",
+                    url:`/user/${id}`,
                     method: 'GET',
                     dataType: 'json',
                     success: function(hasil) {
-                        $(#formEditData).html(`
+                        $("#formEditData").html(`
                     @csrf()
                     <div class="modal-body">
                     <div class="form-group">
@@ -338,19 +336,20 @@
                         <input type="hidden" id="id" value="${hasil.id}">
                     </div>
                     <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="type" name="username" id="username" value="${hasil.username}" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="Role">Role</label>
-                        <select name="role" id="role" class="custom-select">
-                            <option value="" disabled hidden selected>-- Piliih Role --</option>
-                            <option ${hasil.role === 'administrasi'?'selected':''} value="administrasi">Administrasi</option>
-                            <option ${hasil.role === 'apoteker'?'selected':''} value="apoteker">Apoteker</option>
-                            <option ${hasil.role === 'manager'?'selected':''} value="manager">Manager</option>
-                            <option ${hasil.role === 'kasir'?'selected':''} value="kasir">Kasir</option>
-                        </select>
-                    </div>
+                            <label for="nik">NIK</label>
+                            <input type="type" name="nik" id="nik" class="form-control" value="${hasil.nik}">
+                        </div>
+                        <div class="form-group">
+                            <label for="level">Role</label>
+                            <select required name="level" id="level" class="custom-select">
+                                <option value="" disabled hidden selected>-- Piliih Role --</option>
+                                <option ${hasil.role === "supervisor"?"selected":""} value="supervisor">Supervisor</option>
+                                <option ${hasil.role === "agent"?"selected":""} value="agent">Apotoker</option>
+                                <option ${hasil.role === "manajer"?"selected":""} value="manajer">Manajer</option>
+                                <option ${hasil.role === "tim_analis"?"selected":""} value="tim_analis">Tim Analis</option>
+                                <option ${hasil.role === "officer"?"selected":""} value="officer">Officer</option>
+                            </select>
+                        </div>
                     <div class="form-group">
                         <label for="status_aktif">Status Aktif</label>
                         <select name="status_aktif" id="status_aktif" class="custom-select">
@@ -379,10 +378,10 @@
                         $('#btn-edit-image').on('click', function() {
                             $('#box-image').html(``);
                             $('#box-image').html(
-                                <input class="form-control-file mt-3" required="" type="file" name="avatar" class="form-control">
+                               `<input class="form-control-file mt-3" required="" type="file" name="avatar" class="form-control">`
                             );
                         })
-                        $('#modalEdit').modal('show');
+                        $("#modalEdit").modal('show');
                     }
                 })
             })
