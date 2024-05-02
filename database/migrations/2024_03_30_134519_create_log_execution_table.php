@@ -28,21 +28,14 @@ class CreateLogExecutionTable extends Migration
             $table->string("phone_state", 100);
             $table->string("dns_server", 100);
             $table->string("speed_test", 100);
-            $table->string("ticket_draft", 50)->nullable();
-            $table->string("ticket_queued", 50)->nullable();
             $table->string("rate_success", 100);
-            $table->string("alasan_dispatch", 100)->nullable();
-            $table->string("eskalasi", 100);
-            $table->string("action_solution", 100);
             $table->enum("wan_trafic", ["ok","nok","tidak bisa di ukur"]);
             $table->enum("lan_trafic", ["ok","nok","tidak bisa di ukur"]);
             $table->integer("wlan");
             $table->integer("lan");
             $table->integer("cpu");
             $table->integer("memory"); 
-            $table->text("keterangan"); 
             $table->string("firewall_level", 100);
-            $table->enum("condition",["before","after"]);
             $table->timestamps();
             $table->softDeletes();
 

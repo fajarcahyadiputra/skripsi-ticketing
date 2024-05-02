@@ -322,25 +322,54 @@
 
 
             //btn show data
-            $(document).on('click', '#btn show data', function() {
+            $(document).on('click', '#btn-edit', function() {
                 const id = $(this).data('id');
                 $.ajax({
-                    url: `/user/${id}`,
+                    url:" /user/${id}",
                     method: 'GET',
                     dataType: 'json',
                     success: function(hasil) {
-                        $(`#formEditData`).html(`
+                        $(#formEditData).html(`
                     @csrf()
                     <div class="modal-body">
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input required type="type" name="nama" id="nama" value="" class="form-control">
+                        <input type="type" name="nama" id="nama" value="${hasil.nama}" class="form-control">
                         <input type="hidden" id="id" value="${hasil.id}">
                     </div>
                     <div class="form-group">
-                            <label for="nik">NIK</label>
-                            <input required type="type" name="nik" id="nik"  value="${hasil.nik}" class="form-control">
-                     </div>
+                        <label for="username">Username</label>
+                        <input type="type" name="username" id="username" value="${hasil.username}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="Role">Role</label>
+                        <select name="role" id="role" class="custom-select">
+                            <option value="" disabled hidden selected>-- Piliih Role --</option>
+                            <option ${hasil.role === 'administrasi'?'selected':''} value="administrasi">Administrasi</option>
+                            <option ${hasil.role === 'apoteker'?'selected':''} value="apoteker">Apoteker</option>
+                            <option ${hasil.role === 'manager'?'selected':''} value="manager">Manager</option>
+                            <option ${hasil.role === 'kasir'?'selected':''} value="kasir">Kasir</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status_aktif">Status Aktif</label>
+                        <select name="status_aktif" id="status_aktif" class="custom-select">
+                            <option value="" disabled hidden selected>-- Piliih Status Aktif --</option>
+                            <option ${hasil.status_aktif === 'aktif'?'selected':''} value="aktif">Aktif</option>
+                            <option ${hasil.status_aktif === 'tidak'?'selected':''} value="tidak">Tidak</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                            <label for="nomer_tlpn">Nomer Telepon</label>
+                            <input type="type" name="text" id="nomer_tlpn" value="${hasil.nomer_tlpn}" class="form-control">
+                        </div>
+                    <div class="form-group">
+                        <label class="d-block">Image</label>
+                        <img class="d-block" width="150" src="{{ env('APP_URL') }}${hasil.avatar}" alt="image sub">
+                        <div id="box-image">
+                            <button type="button" id="btn-edit-image" class="mt-2 btn btn-primary btn-sm">Ganti gambar</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -350,13 +379,14 @@
                         $('#btn-edit-image').on('click', function() {
                             $('#box-image').html(``);
                             $('#box-image').html(
-                                `<input class="form-control-file mt-3" required="" type="file" name="avatar" class="form-control">`
+                                <input class="form-control-file mt-3" required="" type="file" name="avatar" class="form-control">
                             );
                         })
                         $('#modalEdit').modal('show');
                     }
                 })
             })
+            
             //show modal update password
             $(document).on("click", "#btn-change-password", function(e) {
                 const id = $(this).data('id');

@@ -462,10 +462,9 @@
                                 'sukses',
                                 'sukses menambah data',
                                 'success'
-                            )
-                            // .then(() => {
-                            //     document.location.href = '/ticket';
-                            // })
+                            ).then(() => {
+                                document.location.href = '/ticket';
+                            })
                         } else {
                             Swal.fire(
                                 'Gagal',
