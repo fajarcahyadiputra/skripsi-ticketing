@@ -7,7 +7,15 @@
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between">
                 <h5>DATA TICKET</h5>
-                <a class="btn btn-primary" href="{{ route('ticket.create') }}">Tambah</a>
+                <div class="d-flex">
+
+                    <form action="{{ route('tickeTexportExcel') }}" class="d-flex mr-2">
+                        <input required class="form-control" type="date" name="start_date">
+                        <input required class="form-control" type="date" name="end_date">
+                        <button class="btn btn-success" type="submit">Export</button>
+                    </form>
+                    <a class="btn btn-primary" href="{{ route('ticket.create') }}">Tambah</a>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
