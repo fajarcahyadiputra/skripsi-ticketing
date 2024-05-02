@@ -22,6 +22,7 @@ class CreateTableAgent extends Migration
             $table->string("nomer_hp", 20);
             $table->text("domisili");
             $table->string("nama_depan", 100);
+            $table->string("nama_belakang", 100);
             $table->string("jabatan", 100);
             $table->string("kodinator", 100);
             $table->enum("jenis_kelamin", ["laki-laki","perempuan"]);
