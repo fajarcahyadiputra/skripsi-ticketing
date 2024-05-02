@@ -373,8 +373,8 @@
                                             <input {{ $logExecution->wan_trafic == 'ok' ? 'nok' : '' }} type="radio"
                                                 name="wan_trafic" value="nok">
                                             <label class="mr-2" for="css">NOK</label>
-                                            <input {{ $logExecution->wan_trafic == 'tidak bisa diukur' ? 'checked' : '' }}
-                                                type="radio" name="wan_trafic" value="tidak bisa diukur">
+                                            <input {{ $logExecution->wan_trafic == 'no' ? 'checked' : '' }}
+                                                type="radio" name="wan_trafic" value="no">
                                             <label class="mr-2" for="css">TIDAK BISA DI UKUR</label>
                                         </div>
                                         <div class="form-group">
@@ -385,8 +385,8 @@
                                             <input {{ $logExecution->lan_trafic == 'nok' ? 'checked' : '' }}
                                                 type="radio" name="lan_trafic" value="nok">
                                             <label class="mr-2" for="css">NOK</label>
-                                            <input {{ $logExecution->lan_trafic == 'tidak bisa diukur' ? 'checked' : '' }}
-                                                type="radio" name="lan_trafic" value="tidak bisa diukur">
+                                            <input {{ $logExecution->lan_trafic == 'no' ? 'checked' : '' }}
+                                                type="radio" name="lan_trafic" value="no">
                                             <label class="mr-2" for="css">TIDAK BISA DIUKUR</label>
                                         </div>
                                         <div class="row">

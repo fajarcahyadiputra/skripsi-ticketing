@@ -303,7 +303,7 @@
                                             <label class="mr-2" for="html">OK</label>
                                             <input type="radio" name="wan_trafic" value="nok">
                                             <label class="mr-2" for="css">NOK</label>
-                                            <input type="radio" name="wan_trafic" value="tidak bisa diukur">
+                                            <input type="radio" name="wan_trafic" value="no">
                                             <label class="mr-2" for="css">TIDAK BISA DIUKUR</label>
                                         </div>
                                         <div class="form-group">
@@ -312,7 +312,7 @@
                                             <label class="mr-2" for="html">OK</label>
                                             <input type="radio" name="lan_trafic" value="nok">
                                             <label class="mr-2" for="css">NOK</label>
-                                            <input type="radio" name="lan_trafic" value="tidak bisa diukur">
+                                            <input type="radio" name="lan_trafic" value="no">
                                             <label class="mr-2" for="css">TIDAK BISA DIUKUR</label>
                                         </div>
                                         <div class="row">
@@ -399,7 +399,7 @@
                                                 @endforeach
                                             </select>
                                         </div> --}}
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label for="eskalasi">Eskalasi</label>
                                             <textarea name="eskalasi" class="form-control" id="" cols="30" rows="5"></textarea>
                                         </div>
@@ -410,7 +410,7 @@
                                         <div class="form-group">
                                             <label for="keterangan">Keterangan</label>
                                             <textarea name="keterangan" class="form-control" id="" cols="30" rows="5"></textarea>
-                                        </div>
+                                        </div> --}}
 
                                     </div>
                                 </div>
@@ -462,9 +462,10 @@
                                 'sukses',
                                 'sukses menambah data',
                                 'success'
-                            ).then(() => {
-                                document.location.href = '/ticket';
-                            })
+                            )
+                            // .then(() => {
+                            //     document.location.href = '/ticket';
+                            // })
                         } else {
                             Swal.fire(
                                 'Gagal',

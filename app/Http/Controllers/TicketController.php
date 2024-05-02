@@ -141,9 +141,10 @@ class TicketController extends Controller
             $store = LogAfterExecution::create($data);
         }
         $status = explode("-",trim($data["alasan_dispatch"]));
+        $data['status_tiket'] = $status[0];
         $ticket = Ticket::find($data['ticket_id']);
         $data = request()->except('_token');
-        $ticket->fill(["status_tiket" => $status[0]]);
+        $ticket->fill($data);
         $ticket->save();
         DB::commit();
         return response()->json(true);

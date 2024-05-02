@@ -17,7 +17,7 @@ class Ticket extends Model
         'updated_at' => 'datetime:Y-m-d H:i:s'
     ];
     // protected $guarded = [];
-    protected $fillable = ["agent_id","no_tiket","no_inet","nomer_hp","witel","sto","paket_pcrf","pcrf_package","status_usetv","status_customer","radius_package","reference_profile","current_profile","nama_model","version","onu_type","version_id","status_tiket"];
+    protected $fillable = ["agent_id","no_tiket","no_inet","nomer_hp","witel","sto","paket_pcrf","pcrf_package","status_usetv","status_customer","radius_package","reference_profile","current_profile","nama_model","version","onu_type","version_id","status_tiket","action_solution","eskalasi","ticket_draft","ticket_queued","keterangan"];
     public function agent()
     {
         return $this->hasOne(Agent::class, "id", "agent_id");

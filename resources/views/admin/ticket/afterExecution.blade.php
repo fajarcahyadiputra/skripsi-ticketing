@@ -209,8 +209,8 @@
                                             <input {{ $logExecution->wan_trafic == 'ok' ? 'nok' : '' }} type="radio"
                                                 name="wan_trafic" value="nok">
                                             <label class="mr-2" for="css">NOK</label>
-                                            <input {{ $logExecution->wan_trafic == 'tidak bisa diukur' ? 'checked' : '' }}
-                                                type="radio" name="wan_trafic" value="tidak bisa diukur">
+                                            <input {{ $logExecution->wan_trafic == 'no' ? 'checked' : '' }}
+                                                type="radio" name="wan_trafic" value="no">
                                             <label class="mr-2" for="css">TIDAK BISA DI UKUR</label>
                                         </div>
                                         <div class="form-group">
@@ -221,8 +221,8 @@
                                             <input {{ $logExecution->lan_trafic == 'nok' ? 'checked' : '' }}
                                                 type="radio" name="lan_trafic" value="nok">
                                             <label class="mr-2" for="css">NOK</label>
-                                            <input {{ $logExecution->lan_trafic == 'tidak bisa diukur' ? 'checked' : '' }}
-                                                type="radio" name="lan_trafic" value="tidak bisa diukur">
+                                            <input {{ $logExecution->lan_trafic == 'no' ? 'checked' : '' }}
+                                                type="radio" name="lan_trafic" value="no">
                                             <label class="mr-2" for="css">TIDAK BISA DIUKUR</label>
                                         </div>
                                         <div class="row">
@@ -281,29 +281,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <p><b class="text-danger">TICKET DRAFT</b></p>
-                                                <div class="form-group">
-                                                    <label for="ticket_draft">Kode SCC (MYI)</label>
-                                                    <input type="text" name="ticket_draft" id="ticket_draft"
-                                                        class="form-control" value="{{ $logExecution->ticket_draft }}">
-                                                    <span class="alert-obat-kosong text-danger"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><b class="text-danger">TICKET QUEUE</b></p>
-                                                <div class="form-group">
-                                                    <label for="ticket_queued">Kode SCC (MYI)</label>
-                                                    <input type="text" name="ticket_queued" id="ticket_queued"
-                                                        class="form-control" value="{{ $logExecution->ticket_queued }}">
-                                                    <span class="alert-obat-kosong text-danger"></span>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="form-group">
                                             <label for="alasan_dispatch">Alasan Dispatch</label>
-                                            <select name="alasan_dispatch" id="alasan_dispatch" class="custom-select">
+                                            <select required name="alasan_dispatch" id="alasan_dispatch" class="custom-select">
                                                 <option value="" disabled hidden selected>-- Pilih Phone State --
                                                 </option>
                                                 @foreach ($listAlasanDispatch as $alasanDispatch)
@@ -317,11 +297,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="eskalasi">Eskalasi</label>
-                                            <textarea name="eskalasi" class="form-control" id="" cols="30" rows="5">{{ $logExecution->eskalasi }}</textarea>
+                                            <textarea required name="eskalasi" class="form-control" id="" cols="30" rows="5">{{ $logExecution->eskalasi }}</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="action_solution">Action Solution</label>
-                                            <textarea name="action_solution" class="form-control" id="" cols="30" rows="5">{{ $logExecution->action_solution }}</textarea>
+                                            <textarea required name="action_solution" class="form-control" id="" cols="30" rows="5">{{ $logExecution->action_solution }}</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="keterangan">Keterangan</label>
