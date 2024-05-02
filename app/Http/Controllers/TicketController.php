@@ -8,6 +8,8 @@ use App\Models\LogAfterExecution;
 use App\Models\LogBeforeExecution;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TicketExport;
 
 class TicketController extends Controller
 {
@@ -18,12 +20,13 @@ class TicketController extends Controller
      */
     public function index()
     {
+        $monthNow = date("m");
         if(auth()->user()->role == "agent"){
-            $tickets =Ticket::with("agent")->wherehas("agent", function($query) {
+            $tickets =Ticket::whereMonth('created_at', '=','05')->with("agent")->wherehas("agent", function($query) {
                 $query->where("user_id", auth()->user()->id);
-            })->get();
+            })->whereMonth('created_at', '=',$monthNow)->get();
         }else{
-            $tickets =Ticket::with("agent")->get();
+            $tickets =Ticket::with("agent")->whereMonth('created_at', '=',$monthNow)->get();
         }
         // $kode_barang = Barang::generateKode();
         return view('admin.ticket.index', compact('tickets'));
@@ -161,5 +164,12 @@ class TicketController extends Controller
         $listAlasanDispatch = Ticket::listAlasanDispatch();
 
         return view('admin.ticket.detail', compact('ticket', 'logExecution', 'agents','listSTO','listAlasanDispatch','logAfterExecution'));
+    }
+    public function exportExcel(){
+        $startDate = Request()->input("start_date");
+        $endDate = Request()->input("end_date");
+        // $startDate = "2021-06-01";
+        // $endDate = "2021-06-01";
+        return Excel::download(new TicketExport(["start_date" => $startDate, "end_date" => $endDate]), 'ticket.xlsx');
     }
 }

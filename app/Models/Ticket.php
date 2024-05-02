@@ -40,4 +40,12 @@ class Ticket extends Model
         // return ["Dispatch - RNA 3X", "Closed - by SCC", "Closed - by FCR ROC", "Closed - by MYI", "Dispatch - Malam", "Pelanggan Tidak Dapat kode SCC", "Dispatch - Gamas", "Dispatch - Caring NOK", "Dispatch - Logic ok no caring", "Dispatch - Petugas diminta datang", "Dispatch - Pelanggan reject close", "Dispatch - Redaman tinggi/LOS", "Dispatch - Tidak ada log", "Dispatch - Lain-lain", "Dispatch - oleh C4", "Dispatch - Fisik", "Dispatch - Tiket nyasar(ex @wifi.id/dll)", "Dispatch - Tiket NN (Kabel Terjuntai/Tiang Roboh)", "Dispatch - Provisioning", "Dispatch - Tidak berhasil diperbaiki disisi logic", "Dispatch - Isolir", "Disparch - Astinet", "Ex GAMAS", "Dispatch-PDD", "Dispatch-PDA", "DOUBLE TIKET", "Dispatch - Gangguan perangkat Telkom", "Handling - Piket Malem"];
         return ["dispatch","closed"];
     }
+    public function logBefore()
+    {
+        return $this->hasOne(LogBeforeExecution::class, "ticket_id", "id");
+    }
+    public function logAfter()
+    {
+        return $this->hasOne(LogAfterExecution::class, "ticket_id", "id");
+    }
 }
