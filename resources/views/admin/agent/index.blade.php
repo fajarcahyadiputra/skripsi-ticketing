@@ -3,6 +3,7 @@
 @section('content')
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
+        
 
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between">
@@ -12,15 +13,16 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover" id="datatable">
-                        <thead>
-                            <tr>
+                        <thead style="background-color: red">
+                            <tr style="color: white">
                                 <th>No</th>
-                                <th>Nama</th>
+                                <th>Nama karyawan</th>
                                 <th>NIK</th>
                                 <th>Email</th>
                                 <th>perusahaan</th>
-                                <th>Kordinator</th>
+                                <th>Supervisor</th>
                                 <th>Manajer</th>
+                                <th>Avatar</th>
                                 <th>Summery Ticket</th>
                                 {{-- @if (auth()->user()->role == 'kasir' || auth()->user()->role == 'manager') --}}
                                 <th>Action</th>
@@ -42,6 +44,9 @@
                                     <td>{{ $dt->perusahaan }}</td>
                                     <td>{{ $dt->user->nama }}</td>
                                     <td>{{ $dt->user->nama }}</td>
+                                     <td><img width="50"
+                                            src="{{ $dt->avatar ? env('APP_URL') . $dt->avatar : 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png' }}"
+                                            alt="user image"></td>
                                     <td>{{ $totalTiket }}</td>
                                     {{-- @if (auth()->user()->role == 'kasir' || auth()->user()->role == 'manager') --}}
                                     <td class="text-center">
@@ -49,8 +54,8 @@
                                             class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
                                         <button data-id="{{ $dt->id }}" id="btn-hapus"
                                             class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                                        <button data-id="{{ $dt->user_id }}" id="btn-change-password"
-                                            class="btn btn-warning btn-sm"><i class="fas fa-unlock-alt"></i></button>
+                                        {{-- <button data-id="{{ $dt->user_id }}" id="btn-change-password"
+                                            class="btn btn-warning btn-sm"><i class="fas fa-unlock-alt"></i></button> --}}
                                     </td>
                                     {{-- @endif --}}
                                 </tr>
@@ -124,10 +129,6 @@
                             <input required type="type" name="email" id="email" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input required type="type" name="password" id="password" class="form-control">
-                        </div>
-                        <div class="form-group">
                             <label for="tanggal_lahir">Tanggal Lahir</label>
                             <input required type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control">
                         </div>
@@ -142,6 +143,10 @@
                         <div class="form-group">
                             <label for="domisili">Alamat Domisili</label>
                             <textarea required class="form-control" name="domisili" id="domisili" cols="30" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="avatar">Avatar</label>
+                            <input type="file" name="avatar" id="avatar" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -193,8 +198,18 @@
             //add data
             $(document).on('submit', '#formTambah', function(e) {
                 e.preventDefault();
-                const data = $(this).serialize();
-                // alert("okokokkoo")
+                const data = new FormData(document.querySelector('#formTambah'));
+
+                //check extensi avatar
+                const foto = $('#avatar').val();
+                if (!foto.match(/.(jpg|png|jpeg|gift)$/i)) {
+                    Swal.fire(
+                        'Opss',
+                        'extensi file anda salah',
+                        'warning'
+                    )
+                    return false;
+                }
 
                 $.ajax({
                     url: `/user`,
@@ -218,6 +233,10 @@
                                 url: '/agent',
                                 data: data,
                                 dataType: 'json',
+                                processData: false,
+                                contentType: false,
+                                cache: false,
+                                async: true,
                                 type: 'post',
                                 success: function(hasil) {
                                     if (hasil) {
@@ -346,12 +365,25 @@
                             <label for="domisili">Alamat Domisili</label>
                             <textarea required class="form-control" name="domisili" id="domisili" cols="30" rows="3">${hasil.domisili}</textarea>
                         </div>
+                        <div class="form-group">
+                        <label class="d-block">Image</label>
+                        <img class="d-block" width="150" src="{{ env('APP_URL') }}${hasil.avatar}" alt="image sub">
+                        <div id="box-image">
+                            <button type="button" id="btn-edit-image" class="mt-2 btn btn-primary btn-sm">Ganti gambar</button>
+                        </div>
+                    </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                `);
+                       $('#btn-edit-image').on('click', function() {
+                            $('#box-image').html(``);
+                            $('#box-image').html(
+                               `<input class="form-control-file mt-3" required="" type="file" name="avatar" class="form-control">`
+                            );
+                        })
                         $('#modalEdit').modal('show');
                     }
                 })
@@ -359,12 +391,30 @@
             //edit data
             $(document).on('submit', '#formEditData', function(e) {
                 e.preventDefault();
+                let data = new FormData(document.querySelector('#formEditData'));
+                data.append('_method', 'PUT')
+                //check extensi avatar
+                const foto = $('#avatar').val();
+                if (foto != undefined && foto != "") {
+                    if (!foto.match(/.(jpg|png|jpeg|gift)$/i)) {
+                        Swal.fire(
+                            'Opss',
+                            'extensi file anda salah',
+                            'warning'
+                        )
+                        return false;
+                    }
+                }
                 const id = $('#id').val();
                 $.ajax({
                     url: '/agent/' + id,
-                    data: $(this).serialize(),
+                    data:  data,
                     dataType: 'json',
-                    method: "PUT",
+                    method: "POST",
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    async: true,
                     success: function(hasil) {
                         if (hasil) {
                             $('#modalEdit').modal('hide');

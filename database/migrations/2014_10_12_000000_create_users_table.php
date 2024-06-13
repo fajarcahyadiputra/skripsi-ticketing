@@ -25,8 +25,8 @@ class CreateUsersTable extends Migration
             $table->string('password', 200);
             $table->enum('role', ['agent', 'manajer', 'tim_analis', 'officer','supervisor'])->default('agent');
             $table->enum('status_aktif', ['aktif', 'tidak'])->default('aktif');
-            $table->string('nomer_tlpn', 15)->nullable();
-            $table->string('avatar', 100)->nullable();
+            // $table->string('nomer_tlpn', 15)->nullable();
+            // $table->string('avatar', 100)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

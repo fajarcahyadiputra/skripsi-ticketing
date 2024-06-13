@@ -8,6 +8,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\SendMailJob;
+use App\Mail\SendEmail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AgentController extends Controller
 {
@@ -32,19 +36,35 @@ class AgentController extends Controller
     {
         try {
             DB::beginTransaction();
+            $password = Str::random(8);
             $data = $request->except('_token');
+
+                    //buat upload gambar
+            if ($request->hasFile('avatar')) {
+                if ($request->file('avatar')->isValid()) {
+                    $fileName = time() . '-' . date('M') . '.' . $request->file('avatar')->extension();
+                    $request->file('avatar')->move(public_path('assets/image/agent'), $fileName);
+                    $data['avatar'] = "assets/image/agent/$fileName";
+                }
+            }
+
             $user = User::create([
                 "nama" => $data["nama_depan"] ." ".$data["nama_belakang"],
-                "password" => bcrypt($data["password"]),
+                "password" => bcrypt($password),
                 "nik" =>  $data["nik"],
                 "role" =>  "agent",
-                "nomer_tlpn" => $data["nomer_hp"],
             ]);
             $data["manajer"] = Auth()->user()->id;
             $data["kordinator"] = Auth()->user()->id;
             $data["user_id"] = $user->id;
+            $data["password"] = $password;
             $create = Agent::create($data);
             DB::commit();
+
+            //send email
+            // dispatch(new SendMailJob($data));
+            Mail::to($data["email"])->send(new SendEmail($data));
+            
             return response()->json(true);
     } catch (\Throwable $th) {
         DB::rollback();
@@ -73,6 +93,17 @@ class AgentController extends Controller
     {
         $agent = Agent::find($id);
         $data = $request->except('_token');
+
+         if ($request->hasFile('avatar')) {
+            if ($request->file('avatar')->isValid()) {
+                if (file_exists(public_path($agent->avatar) && $agent->avatar != null)) {
+                    unlink(public_path($agent->avatar));
+                }
+                $fileName = time() . '-' . date('M') . '.' . $request->file('avatar')->extension();
+                $request->file('avatar')->move(public_path('assets/image/agent'), $fileName);
+                $data['avatar'] = "assets/image/agent/$fileName";
+            }
+        }
         $agent->fill($data);
         if ($agent->save()) {
             return response()->json(true);

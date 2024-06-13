@@ -8,20 +8,25 @@
             <div class="card-header d-flex justify-content-between">
                 <h5>DATA TICKET</h5>
                 <div class="d-flex">
-
-                    <form action="{{ route('tickeTexportExcel') }}" class="d-flex mr-2">
-                        <input required class="form-control" type="date" name="start_date">
+                    
+                    <form action="{{ route('fillterByDate') }}" method="GET" class="d-flex mr-2">
+                        <input required class="form-control" value="" type="date" name="start_date">
                         <input required class="form-control" type="date" name="end_date">
+                        <button class="btn btn-success" type="submit">Fillter</button>
+                    </form>
+                    <form action="{{ route('tickeTexportExcel') }}" method="GET" class="d-flex mr-2">
+                        <input hidden required class="form-control" value="{{request()->input("start_date")}}" type="date" name="start_date">
+                        <input hidden required class="form-control" value="{{request()->input("end_date")}}" type="date" name="end_date">
                         <button class="btn btn-success" type="submit">Export</button>
                     </form>
-                    <a class="btn btn-primary" href="{{ route('ticket.create') }}">Tambah</a>
+                    <a class="btn btn-primary" href="{{ route('ticket.create') }}">Cretae</a>
                 </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover" id="datatable">
-                        <thead>
-                            <tr>
+                        <thead style="background-color: red">
+                            <tr style="color: white">
                                 <th class="text-sm">No</th>
                                 <th class="text-sm">Nama Agent</th>
                                 {{-- <th class="text-sm">ID Nasa</th> --}}
@@ -55,8 +60,7 @@
                                         {{-- <a href="{{ route('ticket.edit', $dt->id) }}" id="btn-edit"
                                             class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a> --}}
                                         <button data-id="{{ $dt->id }}"
-                                            id="btn
-                                            hapus"
+                                            id="btn-hapus"
                                             class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                         <a href="{{ route('ticket.afterExecution', $dt->id) }}" id="btn-edit"
                                             class="btn btn-warning btn-sm"><i class="fas fa-door-closed"></i></a>
@@ -147,9 +151,9 @@
                                         'error'
                                     )
                                 }
-                                // setTimeout(() => {
-                                //     location.reload();
-                                // }, 800);
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 800);
                             }
                         })
                     }

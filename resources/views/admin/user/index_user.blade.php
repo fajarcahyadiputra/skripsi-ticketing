@@ -14,14 +14,14 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover" id="datatable">
-                        <thead>
-                            <tr class="">
+                        <thead style="background-color: red">
+                            <tr style="color: white">
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>NIK</th>
+                                <th>Nama Role</th>
+                                {{-- <th>NIK</th> --}}
                                 <th>Role</th>
-                                <th>Nomer Telepon</th>
-                                <th>Avatar</th>
+                                <th>Status Aktif</th>
+                                {{-- <th>Avatar</th> --}}
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -30,19 +30,19 @@
                                 <tr>
                                     <td class="align-middle">{{ $no + 1 }}</td>
                                     <td class="align-middle">{{ $dt->nama }}</td>
-                                    <td class="align-middle">{{ $dt->nik }}</td>
+                                    {{-- <td class="align-middle">{{ $dt->nik }}</td> --}}
                                     <td class="align-middle">{{ $dt->role }}</td>
-                                    <td class="align-middle">{{ $dt->nomer_tlpn }}</td>
-                                    <td><img width="50"
+                                    <td class="align-middle">{{ $dt->status_aktif }}</td>
+                                    {{-- <td><img width="50"
                                             src="{{ $dt->avatar ? env('APP_URL') . $dt->avatar : 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png' }}"
-                                            alt="user image"></td>
+                                            alt="user image"></td> --}}
                                     <td class="text-center">
                                         <button data-id="{{ $dt->id }}" id="btn-edit"
                                             class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
                                         <button data-id="{{ $dt->id }}" id="btn-hapus"
                                             class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                                        <button data-id="{{ $dt->id }}" id="btn-change-password"
-                                            class="btn btn-warning btn-sm"><i class="fas fa-unlock-alt"></i></button>
+                                        {{-- <button data-id="{{ $dt->id }}" id="btn-change-password"
+                                            class="btn btn-warning btn-sm"><i class="fas fa-unlock-alt"></i></button> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -113,10 +113,10 @@
                                 <option value="tidak">Tidak</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="nomer_tlpn">Nomer Telepon</label>
                             <input required type="type" name="nomer_tlpn" id="nomer_tlpn" class="form-control">
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input required type="type" name="password" id="password" class="form-control">
@@ -125,10 +125,10 @@
                             <label for="password_confirmation">Comfirm Password</label>
                             <input required type="text" id="password_confirmation" class="form-control">
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="avatar">Avatar</label>
                             <input type="file" name="avatar" id="avatar" class="form-control">
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -199,15 +199,15 @@
                 const data = new FormData(document.querySelector('#formTambah'));
 
                 //check extensi avatar
-                const foto = $('#avatar').val();
-                if (!foto.match(/.(jpg|png|jpeg|gift)$/i)) {
-                    Swal.fire(
-                        'Opss',
-                        'extensi file anda salah',
-                        'warning'
-                    )
-                    return false;
-                }
+                // const foto = $('#avatar').val();
+                // if (!foto.match(/.(jpg|png|jpeg|gift)$/i)) {
+                //     Swal.fire(
+                //         'Opss',
+                //         'extensi file anda salah',
+                //         'warning'
+                //     )
+                //     return false;
+                // }
                 if ($('#password_confirmation').val() != $("#password").val()) {
                     Swal.fire(
                         'Opss',
@@ -358,17 +358,8 @@
                             <option ${hasil.status_aktif === 'tidak'?'selected':''} value="tidak">Tidak</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                            <label for="nomer_tlpn">Nomer Telepon</label>
-                            <input type="type" name="text" id="nomer_tlpn" value="${hasil.nomer_tlpn}" class="form-control">
-                        </div>
-                    <div class="form-group">
-                        <label class="d-block">Image</label>
-                        <img class="d-block" width="150" src="{{ env('APP_URL') }}${hasil.avatar}" alt="image sub">
-                        <div id="box-image">
-                            <button type="button" id="btn-edit-image" class="mt-2 btn btn-primary btn-sm">Ganti gambar</button>
-                        </div>
-                    </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -385,6 +376,17 @@
                     }
                 })
             })
+            // <div class="form-group">
+            //                 <label for="nomer_tlpn">Nomer Telepon</label>
+            //                <input type="type" name="text" id="nomer_tlpn" value="${hasil.nomer_tlpn}" class="form-control">
+            //             </div>
+            // <div class="form-group">
+            //             <label class="d-block">Image</label>
+            //             <img class="d-block" width="150" src="{{ env('APP_URL') }}${hasil.avatar}" alt="image sub">
+            //             <div id="box-image">
+            //                 <button type="button" id="btn-edit-image" class="mt-2 btn btn-primary btn-sm">Ganti gambar</button>
+            //             </div>
+            //         </div>
             
             //show modal update password
             $(document).on("click", "#btn-change-password", function(e) {

@@ -9,13 +9,13 @@
                 <h2 align="center" style="font-weight: bold">Selamat Datang {{ auth()->user()->nama }}</h2>
             </div>
             <div class="card-body">
-                <div style="width: 700px; height:500px">
+                <div style="width: 700px; height:350px; margin-bottom: 0">
                     <canvas id="myChart"></canvas>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive" style="margin-top: 0">
                     <table class="table table-bordered table-striped table-hover" id="datatable">
-                        <thead>
-                            <tr>
+                        <thead style="background-color: red">
+                            <tr style="color: white">
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>NIK</th>

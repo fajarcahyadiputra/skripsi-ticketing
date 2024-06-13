@@ -24,9 +24,9 @@ class UserController extends Controller
         }
         $rule = [
             'nama' => 'required|string',
-            // 'nik' => 'required|nik',
-            'password' => 'required|password',
-            'avatar' => 'mimes:jpg,png,jpeg,gift|max:2000|required'
+            'nik' => 'required|string',
+            // 'password' => 'required|password',
+            // 'avatar' => 'mimes:jpg,png,jpeg,gift|max:2000|required'
         ];
 
         $validate = Validator::make($data, $rule);
@@ -37,13 +37,13 @@ class UserController extends Controller
             ]);
         }
         //buat upload gambar
-        if ($request->hasFile('avatar')) {
-            if ($request->file('avatar')->isValid()) {
-                $fileName = time() . '-' . date('M') . '.' . $request->file('avatar')->extension();
-                $request->file('avatar')->move(public_path('assets/image/user'), $fileName);
-                $data['avatar'] = "assets/image/user/$fileName";
-            }
-        }
+        // if ($request->hasFile('avatar')) {
+        //     if ($request->file('avatar')->isValid()) {
+        //         $fileName = time() . '-' . date('M') . '.' . $request->file('avatar')->extension();
+        //         $request->file('avatar')->move(public_path('assets/image/user'), $fileName);
+        //         $data['avatar'] = "assets/image/user/$fileName";
+        //     }
+        // }
         $data['password'] = Hash::make($request->input('password'));
 
         $newUser = User::create([
@@ -51,8 +51,8 @@ class UserController extends Controller
             'nik' => $data['nik'],
             'password' => $data['password'],
             'role' => $data['level'],
-            'nomer_tlpn' => $data['nomer_tlpn'],
-            'avatar' => $data['avatar']
+            // 'nomer_tlpn' => $data['nomer_tlpn'],
+            // 'avatar' => $data['avatar']
         ]);
         if ($newUser) {
             return response()->json(true);
@@ -72,7 +72,7 @@ class UserController extends Controller
             'nama' => 'required|string',
             'nik' => 'required|nik',
             'password' => 'required|password',
-            'avatar' => 'mimes:jpg,png,jpeg,gift|max:2000|required'
+            // 'avatar' => 'mimes:jpg,png,jpeg,gift|max:2000|required'
         ];
         $data = $request->except('_token');
         // $validate = Validator::make($data, $rule);
@@ -81,17 +81,17 @@ class UserController extends Controller
         //         'status' => 'error',
         //         'errors' => $validate->errors()
         //     ]);
+        // // }
+        // if ($request->hasFile('avatar')) {
+        //     if ($request->file('avatar')->isValid()) {
+        //         if (file_exists(public_path($user->avatar) && $user->avatar != null)) {
+        //             unlink(public_path($user->avatar));
+        //         }
+        //         $fileName = time() . '-' . date('M') . '.' . $request->file('avatar')->extension();
+        //         $request->file('avatar')->move(public_path('assets/image/user'), $fileName);
+        //         $data['avatar'] = "assets/image/user/$fileName";
+        //     }
         // }
-        if ($request->hasFile('avatar')) {
-            if ($request->file('avatar')->isValid()) {
-                if (file_exists(public_path($user->avatar) && $user->avatar != null)) {
-                    unlink(public_path($user->avatar));
-                }
-                $fileName = time() . '-' . date('M') . '.' . $request->file('avatar')->extension();
-                $request->file('avatar')->move(public_path('assets/image/user'), $fileName);
-                $data['avatar'] = "assets/image/user/$fileName";
-            }
-        }
         $user->fill($data);
         if ($user->save()) {
             return response()->json(true);
@@ -130,5 +130,9 @@ class UserController extends Controller
         } else {
             return response()->json(false);
         }
+    }
+    public function profile($id, Request $request) {
+        $user = User::find($id);
+        return view('admin.user.profile', compact('user'));
     }
 }
