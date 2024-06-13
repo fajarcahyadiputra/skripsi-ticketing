@@ -17,7 +17,7 @@ class DashboardController extends Controller
     public function index()
     { 
         $dateNow = date("m");
-        $totalClose = DB::select("SELECT agents.nama_depan, agents.nama_belakang,  agent_id, COUNT(*) AS total FROM tickets  INNER JOIN agents ON agents.id = tickets.agent_id WHERE tickets.status_tiket = 'closed' AND MONTH(tickets.created_at) = ".$dateNow." group BY agent_id ORDER BY total DESC LIMIT 10");
+        $totalClose = DB::select("SELECT agents.nama_depan, agents.nama_belakang,  agent_id, COUNT(*) AS total FROM tickets  INNER JOIN agents ON agents.id = tickets.agent_id WHERE tickets.status_tiket = 'closed' AND MONTH(tickets.created_at) = ".$dateNow." AND tickets.deleted_at IS NULL group BY agent_id ORDER BY total DESC LIMIT 10");
         
 
         $nama = [];

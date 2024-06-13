@@ -27,7 +27,7 @@ class TicketController extends Controller
                 $query->where("user_id", auth()->user()->id);
             })->whereMonth('created_at', '=',$monthNow)->get();
         }else{
-            $tickets =Ticket::with("agent")->get();
+            $tickets =Ticket::with("agent")->whereMonth('created_at', '=', $monthNow)->get();
         }
         // $kode_barang = Barang::generateKode();
         return view('admin.ticket.index', compact('tickets'));
@@ -147,13 +147,10 @@ class TicketController extends Controller
         $status = explode("-",trim($data["alasan_dispatch"]));
         $data['status_tiket'] = $status[0];
         $ticket = Ticket::find($data['ticket_id']);
-        $data = request()->except('_token');
+        // return response()->json($data);
         $ticket->fill($data);
         $ticket->save();
         DB::commit();
-
-
-
 
         return response()->json(true);
         } catch (\Throwable $th) {

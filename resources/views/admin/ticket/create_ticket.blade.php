@@ -380,8 +380,8 @@
                                             <div class="col-md-6">
                                                 <p><b class="text-danger">TICKET QUEUE</b></p>
                                                 <div class="form-group">
-                                                    <label for="tivket_queued">Kode SCC (MYI)</label>
-                                                    <input type="text" name="tivket_queued" id="tivket_queued"
+                                                    <label for="ticket_queued">Kode SCC (MYI)</label>
+                                                    <input type="text" name="ticket_queued" id="ticket_queued"
                                                         class="form-control">
                                                     <span class="alert-obat-kosong text-danger"></span>
                                                 </div>

@@ -107,8 +107,10 @@
                                         name="status_usetv" value="no">
                                     <label for="javascript">TIDAK ADA LAYANAN USEETV</label>
                                 </div>
+                                <br><br><br><br><br><br>
                                 <p><b class="text-success">LOG BEFORE EXECUTION</b></p>
                                 {{-- second --}}
+                                
                                 <p><b class="text-danger">MENU OLT</b></p>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -302,16 +304,53 @@
                                                     class="form-control" value="{{ $ticket->status_tiket }}">
                                             </div>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p><b class="text-danger">TICKET DRAFT</b></p>
+                                                    <div class="form-group">
+                                                        <label for="ticket_draft">Kode SCC (MYI)</label>
+                                                        <input readonly type="text" name="ticket_draft" id="ticket_draft"
+                                                            class="form-control"
+                                                            value="{{ $ticket->ticket_draft }}">
+                                                        <span class="alert-obat-kosong text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><b class="text-danger">TICKET QUEUE</b></p>
+                                                    <div class="form-group">
+                                                        <label for="ticket_queued">Kode SCC (MYI)</label>
+                                                        <input readonly type="text" name="ticket_queued"
+                                                            id="ticket_queued" class="form-control"
+                                                            value="{{ $ticket->ticket_queued }}">
+                                                        <span class="alert-obat-kosong text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                            <div class="form-group">
+                                                <label for="eskalasi">Eskalasi</label>
+                                                <textarea readonly name="eskalasi" class="form-control" id="" cols="30" rows="2">{{ $ticket->eskalasi }}</textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="action_solution">Action Solution</label>
+                                                <textarea readonly name="action_solution" class="form-control" id="" cols="30" rows="2">{{ $ticket->action_solution }}</textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="keterangan">Keterangan</label>
+                                                <textarea readonly name="keterangan" class="form-control" id="" cols="30" rows="4">{{ $ticket->keterangan }}</textarea>
+                                            </div>
+    
+                                        </div>
                                     </div>
+                                    
 
                                 </div>
 
 
-
-
                                 <br><br><br>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <p><b class="text-danger">ONT LAND INFORMATION</b></p>
                                         <div class="form-group">
                                             <label for="dns_server">DNS Server</label>
@@ -454,7 +493,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <p><b class="text-danger">TICKET DRAFT</b></p>
@@ -476,11 +515,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="form-group">
+                                        <div class="form-group">
                                             <label for="alasan_dispatch">Status</label>
                                             <input readonly type="text" name="ticket_queued" id="ticket_queued"
                                                 class="form-control" value="{{ $logExecution->alasan_dispatch }}">
-                                        </div> --}}
+                                        </div>
                                         <div class="form-group">
                                             <label for="eskalasi">Eskalasi</label>
                                             <textarea readonly name="eskalasi" class="form-control" id="" cols="30" rows="5">{{ $logExecution->eskalasi }}</textarea>
@@ -494,7 +533,7 @@
                                             <textarea readonly name="keterangan" class="form-control" id="" cols="30" rows="10">{{ $logExecution->keterangan }}</textarea>
                                         </div>
 
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
 
@@ -639,7 +678,7 @@
                             <div class="col-md-6">
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <p><b class="text-danger">ONT LAND INFORMATION</b></p>
                                         <div class="form-group">
                                             <label for="dns_server">DNS Server</label>
@@ -788,7 +827,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <p><b class="text-danger">TICKET DRAFT</b></p>
@@ -825,7 +864,7 @@
                                             <textarea readonly name="keterangan" class="form-control" id="" cols="30" rows="10">{{ $logAfterExecution->keterangan }}</textarea>
                                         </div>
 
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
 
