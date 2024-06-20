@@ -6,7 +6,7 @@
 
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between">
-                <h5>AGEN PROFILE</h5>
+                <h5>USER PROFILE</h5>
             </div>
             <div class="card-body">
                 <form id="formEditData" method="post">
@@ -14,67 +14,23 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nik">NIK</label>
-                            <input required type="type" name="nik" id="nik" class="form-control"
-                                value="{{ $agent->nik }}">
+                            <input readonly required type="type" name="nik" id="nik" class="form-control"
+                                value="{{ $user->nik }}">
                         </div>
                         <div class="form-group">
-                            <label for="nama_depan">Nama Depan</label>
-                            <input required type="type" name="nama_depan" id="nama_depan" class="form-control"
-                                value="{{ $agent->nama_depan }}">
+                            <label for="nama">Nama</label>
+                            <input readonly type="type" name="nama" id="nama" class="form-control"
+                                value="{{ $user->nama }}">
                         </div>
                         <div class="form-group">
-                            <label for="nama_belakang">Nama Belakang</label>
-                            <input required type="type" name="nama_belakang" id="nama_belakang" class="form-control"
-                                value="{{ $agent->nama_belakang }}">
+                            <label for="nama">Nama Role</label>
+                            <input readonly type="type" name="nama" id="nama" class="form-control"
+                                value="{{ $user->role }}">
                         </div>
                         <div class="form-group">
-                            <label for="jenis_kelamin">Jenis Kelamin</label>
-                            <select required name="jenis_kelamin" id="jenis_kelamin" class="custom-select">
-                                <option {{ $agent->jenis_kelamin === 'perempuan' ? 'selected' : '' }} value="perempuan">
-                                    Perempuan
-                                </option>
-                                <option {{ $agent->jenis_kelamin === 'laki-laki' ? 'selected' : '' }} value="laki-laki">
-                                    Laki-Laki
-                                </option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="perusahaan">Perusahaan</label>
-                            <input required type="type" name="perusahaan" id="perusahaan" class="form-control"
-                                value="{{ $agent->perusahaan }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input required type="type" name="email" id="email" class="form-control"
-                                value="{{ $agent->email }}">
-                        </div>
-                        <div class="form-group">
-                            <button type="button" data-id="{{ $agent->user_id }}" id="btn-change-password"
+                            <button type="button" data-id="{{ $user->id }}" id="btn-change-password"
                                 class="btn btn-warning btn-sm"><i class="fas fa-unlock-alt mr-2"></i>Edit Password?</button>
                         </div>
-                        <div class="form-group">
-                            <label for="tanggal_lahir">Tanggal Lahir</label>
-                            <input required type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control"
-                                value="{{ $agent->tanggal_lahir }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="jabatan">Jabatan</label>
-                            <input required type="text" name="jabatan" id="jabatan" class="form-control"
-                                value="{{ $agent->jabatan }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="nomer_hp">Nomer HP</label>
-                            <input required type="text" name="nomer_hp" id="nomer_hp" class="form-control"
-                                value="{{ $agent->nomer_hp }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="domisili">Alamat Domisili</label>
-                            <textarea required class="form-control" name="domisili" id="domisili" cols="30" rows="3">{{ $agent->domisili }}</textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Edit</button>
                     </div>
                 </form>
             </div>

@@ -7,18 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
-class Agent extends Model
+class Role extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = "agents";
+    protected $table = "roles";
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
-    protected $fillable = ["avatar","user_id","nik", "nama_depan", "nama_belakang", "jenis_kelamin", "perusahaan", "email", "tanggal_lahir", "jabatan", "nomer_hp", "domisili", "manajer", "kordinator"];
+    protected $fillable = ["nama","role"];
 
-    public function user()
-    {
-        return $this->hasOne(User::class, "id", "user_id");
-    }
+
 }

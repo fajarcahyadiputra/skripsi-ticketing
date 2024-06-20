@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
-use App\Models\Agent;
+use App\Models\User;
 use App\Models\LogAfterExecution;
 use App\Models\LogBeforeExecution;
 use Illuminate\Http\Request;
@@ -23,25 +23,26 @@ class TicketController extends Controller
     {
         $monthNow = date("m");
         if(auth()->user()->role == "agent"){
-            $tickets =Ticket::whereMonth('created_at', '=','05')->with("agent")->wherehas("agent", function($query) {
+            $tickets =Ticket::whereMonth('created_at', '=', $monthNow)->with("user")->wherehas("user", function($query) {
                 $query->where("user_id", auth()->user()->id);
             })->whereMonth('created_at', '=',$monthNow)->get();
         }else{
-            $tickets =Ticket::with("agent")->whereMonth('created_at', '=', $monthNow)->get();
+            $tickets =Ticket::with("user")->whereMonth('created_at', '=', $monthNow)->get();
         }
         // $kode_barang = Barang::generateKode();
         return view('admin.ticket.index', compact('tickets'));
     }
     public function create()
     {
-        $agents = Agent::all();
+        $agents = User::where("role_id", 1)->get();
         $listSTO = Ticket::listSTO();
         $listAlasanDispatch = Ticket::listAlasanDispatch();
+        $userID = auth()->user()->id;
         return view('admin.ticket.create_ticket', compact('agents','listSTO','listAlasanDispatch'));
     }
     public function store(Request $request)
     {
-        try {
+        try { 
             DB::beginTransaction();
             $data = $request->except('_token');
             $ticket = Ticket::create($data);
@@ -83,7 +84,7 @@ class TicketController extends Controller
     {
         $ticket = Ticket::find($id);
         $logExecution = LogBeforeExecution::where(["ticket_id" => $id])->first();
-        $agents =Agent::all();
+        $agents =User::all();
         $listSTO = Ticket::listSTO();
         $listAlasanDispatch = Ticket::listAlasanDispatch();
 
@@ -123,7 +124,7 @@ class TicketController extends Controller
     {
         $ticket = Ticket::find($id);
         $logExecution = LogBeforeExecution::where(["ticket_id" => $id])->first();
-        $agents =Agent::all();
+        $agents =User::all();
         $listSTO = Ticket::listSTO();
         $listAlasanDispatch = Ticket::listAlasanDispatch();
 
@@ -165,7 +166,7 @@ class TicketController extends Controller
         $ticket = Ticket::find($id);
         $logExecution = LogBeforeExecution::where(["ticket_id" => $id])->first();
         $logAfterExecution = LogAfterExecution::where(["ticket_id" => $ticket->id])->first();
-        $agents =Agent::all();
+        $agents =User::all();
         $listSTO = Ticket::listSTO();
         $listAlasanDispatch = Ticket::listAlasanDispatch();
 
@@ -183,7 +184,7 @@ class TicketController extends Controller
         $endDate = Request()->input("end_date");
         $startDate = Carbon::createFromFormat('Y-m-d', $startDate);
         $endDate = Carbon::createFromFormat('Y-m-d', $endDate);
-        $tickets = Ticket::with("logBefore")->with("logAfter")->with("agent")->whereIn("status_tiket", ["closed","dispatch"])->whereBetween('created_at', [$startDate, $endDate])->get();
+        $tickets = Ticket::with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereBetween('created_at', [$startDate, $endDate])->get();
         return view('admin.ticket.index', compact('tickets'));
     }
 }

@@ -15,13 +15,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="agent_id">Agent</label>
-                                    <select required name="agent_id" id="agent_id" class="form-control">
+                                    <label for="user_id">Agent</label>
+                                    <select required name="user_id" id="user_id" class="form-control">
                                         <option value="" disabled selected hidden>-- Pilih Agent --</option>
                                         @foreach ($agents as $agent)
-                                            <option value="{{ $agent->id }}">
+                                        @if(auth()->user()->role == "agent")
+                                            <option {{auth()->user()->id == $agent->user_id ? "selected":""}}  value="{{ $agent->id }}">
                                                 {{ $agent->nama_depan . ' ' . $agent->nama_belakang }}
                                             </option>
+                                        @else
+                                            <option  value="{{ $agent->id }}">
+                                                {{ $agent->nama_depan . ' ' . $agent->nama_belakang }}
+                                            </option>
+                                        @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -366,53 +372,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <p><b class="text-danger">TICKET DRAFT</b></p>
-                                                <div class="form-group">
-                                                    <label for="ticket_draft">Kode SCC (MYI)</label>
-                                                    <input type="text" name="ticket_draft" id="ticket_draft"
-                                                        class="form-control">
-                                                    <span class="alert-obat-kosong text-danger"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><b class="text-danger">TICKET QUEUE</b></p>
-                                                <div class="form-group">
-                                                    <label for="ticket_queued">Kode SCC (MYI)</label>
-                                                    <input type="text" name="ticket_queued" id="ticket_queued"
-                                                        class="form-control">
-                                                    <span class="alert-obat-kosong text-danger"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="form-group">
-                                            <label for="alasan_dispatch">Alasan Dispatch</label>
-                                            <select name="alasan_dispatch" id="alasan_dispatch" class="custom-select">
-                                                <option value="" disabled hidden selected>-- Piliih Phone State --
-                                                </option>
-                                                @foreach ($listAlasanDispatch as $alasanDispatch)
-                                                    <option value="{{ $alasanDispatch }}">
-                                                        {{ $alasanDispatch }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div> --}}
-                                        {{-- <div class="form-group">
-                                            <label for="eskalasi">Eskalasi</label>
-                                            <textarea name="eskalasi" class="form-control" id="" cols="30" rows="5"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="action_solution">Action Solution</label>
-                                            <textarea name="action_solution" class="form-control" id="" cols="30" rows="5"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="keterangan">Keterangan</label>
-                                            <textarea name="keterangan" class="form-control" id="" cols="30" rows="5"></textarea>
-                                        </div> --}}
 
-                                    </div>
                                 </div>
                             </div>
 
@@ -456,22 +416,22 @@
                     type: 'post',
                     success: function(hasil) {
                         console.log(hasil);
-                        if (hasil) {
-                            $('#modalTambah').modal('hide')
-                            Swal.fire(
-                                'sukses',
-                                'sukses menambah data',
-                                'success'
-                            ).then(() => {
-                                document.location.href = '/ticket';
-                            })
-                        } else {
-                            Swal.fire(
-                                'Gagal',
-                                'gagal menambah data',
-                                'error'
-                            )
-                        }
+                        // if (hasil) {
+                        //     $('#modalTambah').modal('hide')
+                        //     Swal.fire(
+                        //         'sukses',
+                        //         'sukses menambah data',
+                        //         'success'
+                        //     ).then(() => {
+                        //         document.location.href = '/ticket';
+                        //     })
+                        // } else {
+                        //     Swal.fire(
+                        //         'Gagal',
+                        //         'gagal menambah data',
+                        //         'error'
+                        //     )
+                        // }
                     }
                 })
             })

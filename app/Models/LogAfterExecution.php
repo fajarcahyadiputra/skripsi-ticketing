@@ -10,7 +10,7 @@ class LogAfterExecution extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'log_after_executions';
-    protected $fillable = ["ticket_id","rx_olt","rx_onu","temp_ont","status_acs","wifi_config","conn_state","ext_ip","chanel_use","interference","phone_state","dns_server","speed_test","rate_success","wan_trafic","lan_trafic","wlan","lan","cpu","memory","firewall_level","condition"];
+    protected $fillable = ["ticket_id","rx_olt","rx_onu","temp_ont","status_acs","wifi_config","conn_state","ext_ip","chanel_use","interference","phone_state","dns_server","speed_test","rate_success","wan_trafic","lan_trafic","wlan","lan","cpu","memory","firewall_level","condition","ticket_draft","ticket_queued"];
     protected $casts = [
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',

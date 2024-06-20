@@ -18,7 +18,7 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = ['nama', 'jenis_kelamin', 'nik', 'password', 'role', 'status_aktif', 'avatar','nomer_tlpn'];
+    protected $fillable = ["avatar","role_id","nik", "nama_depan", "nama_belakang", "jenis_kelamin", "perusahaan", "email", "tanggal_lahir", "nomer_hp", "domisili", "manajer", "supervisor","role","password"];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -38,4 +38,8 @@ class User extends Authenticatable
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
+    public function roleUser()
+    {
+        return $this->hasOne(Role::class, "id", "role_id");
+    }
 }

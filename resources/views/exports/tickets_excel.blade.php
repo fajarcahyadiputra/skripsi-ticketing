@@ -157,7 +157,7 @@
     <tbody>
         @foreach ($tickets as $ticket)
             <tr>
-                <td class="tg-0pky">{{ $ticket->agent->nama_depan }}</td>
+                <td class="tg-0pky">{{ $ticket->user->nama_depan }} {{$ticket->user->nama_belakang}}</td>
                 <td class="tg-0pky">{{ now() }}</td>
                 <td class="tg-0pky">{{ $ticket->created_at }}</td>
                 <td class="tg-0pky">{{ $ticket->no_tiket }}</td>
@@ -212,8 +212,8 @@
                 <td class="tg-0pky">{{ $ticket->logAfter->cpu }}</td>
                 <td class="tg-0pky">{{ $ticket->logAfter->memory }}</td>
                 <td class="tg-0pky">{{ $ticket->logAfter->firewall_level }}</td>
-                <td class="tg-0pky">{{$ticket->ticket_draft}}</td>
-                <td class="tg-0pky">{{$ticket->ticket_queued}}</td>
+                <td class="tg-0pky">{{$ticket->logAfter->ticket_draft}}</td>
+                <td class="tg-0pky">{{$ticket->logAfter->ticket_queued}}</td>
                 <td class="tg-0pky">{{$ticket->status_tiket}}</td>
                 <td class="tg-0pky">{{$ticket->eskalasi}}</td>
                 <td class="tg-0pky">{{$ticket->action_solution}}</td>

@@ -21,15 +21,15 @@
                                 <th>NIK</th>
                                 <th>Email</th>
                                 <th>perusahaan</th>
-                                <th>Kordinator</th>
+                                <th>Supervisor</th>
                                 <th>Manajer</th>
                                 <th>Summery Ticket</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($agents as $no => $dt)
+                            @foreach ($users as $no => $dt)
                                 @php
-                                    $totalTiket = \App\Models\Ticket::where('agent_id', $dt->id)
+                                    $totalTiket = \App\Models\Ticket::where('user_id', $dt->id)
                                         ->get()
                                         ->count();
                                 @endphp
@@ -39,8 +39,8 @@
                                     <td>{{ $dt->nik }}</td>
                                     <td>{{ $dt->email }}</td>
                                     <td>{{ $dt->perusahaan }}</td>
-                                    <td>{{ $dt->user->nama }}</td>
-                                    <td>{{ $dt->user->nama }}</td>
+                                    <td>{{ $dt->supervisor }}</td>
+                                    <td>{{ $dt->manager }}</td>
                                     <td>{{ $totalTiket }}</td>
                                 </tr>
                             @endforeach

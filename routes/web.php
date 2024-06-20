@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AgentController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\BarangKeluarController;
@@ -13,7 +13,7 @@ use App\Http\Controllers\OrderObatController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TicketController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,17 +34,18 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth', 'permision']], function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('/user', UserController::class);
-    Route::post('/user/check-password', [UserController::class, 'checkPassword'])->name("checkPassword");
-    Route::post('/user/update-password', [UserController::class, 'updatePassword'])->name("updatePassword");
-    Route::post('/user/{id}', [UserController::class, 'update']);
-    Route::get("/agent/profile/{id}", [AgentController::class, "profile"])->name("detailProfil");
-    Route::get("/user/profile/{id}", [UserController::class, "profile"])->name("detailProfilUser");
-    
-    
+    Route::resource('/role', RoleController::class);
+    Route::post('/role/{id}', [RoleController::class, 'update']);
 
-    Route::resource('/agent', AgentController::class);
-    Route::post('/agent/{id}', [UserController::class, 'update']);
+
+    // Route::get("/user/profile/{id}", [RoleController::class, "profile"])->name("detailProfilUser");
+    
+    Route::get("/user/profile/{id}", [UserController::class, "profile"])->name("detailProfilUser");
+    Route::post('/user/update-password', [UserController::class, 'updatePassword'])->name("updatePassword");
+    Route::post('/user/check-password', [UserController::class, 'checkPassword'])->name("checkPassword");
+    Route::resource('/user', UserController::class);
+    Route::post('/user/{id}', [RoleController::class, 'update']);
+
     Route::resource("/ticket", TicketController::class, ['except' => 'show']);
     Route::get("/ticket/after-execution/{id}", [TicketController::class, "afterExecution"])->name("ticket.afterExecution");
     Route::post("/ticket/after-execution", [TicketController::class, "storeAfterExecution"])->name("ticket.storeAfterExecution");

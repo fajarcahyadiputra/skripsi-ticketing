@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Agent;
+use App\Models\User;
 use App\Models\Customer;
 use App\Models\Transaksi;
 use FontLib\Table\Type\name;
@@ -17,7 +17,7 @@ class DashboardController extends Controller
     public function index()
     { 
         $dateNow = date("m");
-        $totalClose = DB::select("SELECT agents.nama_depan, agents.nama_belakang,  agent_id, COUNT(*) AS total FROM tickets  INNER JOIN agents ON agents.id = tickets.agent_id WHERE tickets.status_tiket = 'closed' AND MONTH(tickets.created_at) = ".$dateNow." AND tickets.deleted_at IS NULL group BY agent_id ORDER BY total DESC LIMIT 10");
+        $totalClose = DB::select("SELECT users.nama_depan, users.nama_belakang,  user_id, COUNT(*) AS total FROM tickets  INNER JOIN users ON users.id = tickets.user_id WHERE tickets.status_tiket = 'closed' AND MONTH(tickets.created_at) = ".$dateNow." AND tickets.deleted_at IS NULL group BY user_id ORDER BY total DESC LIMIT 10");
         
 
         $nama = [];
@@ -27,8 +27,8 @@ class DashboardController extends Controller
         array_push($total, $value->total);  
         }
 
-        $agents = Agent::all();
+        $users = User::all();
 
-        return view('admin.dashboard', compact("nama","total","agents"));
+        return view('admin.dashboard', compact("nama","total","users"));
     }
 }

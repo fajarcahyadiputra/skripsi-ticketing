@@ -21,28 +21,37 @@ class Userseeder extends Seeder
     public function run()
     {
         User::create([
-            "nama" => "agent",
+            "role_id" => 1,
+            "nama_depan" => "agent",
+            "nama_belakang" => "agent",
             "nik" => "1345673467894356",
             "password" => bcrypt('123456'),
+            "jenis_kelamin" => "laki-laki",
             "role" => "agent",
-            "nomer_tlpn" => "0896726478264",
+            "nomer_hp" => "0896726478264",
             "status_aktif" => "aktif",
             "avatar" => "",
         ]);
         User::create([
-            "nama" => "officer",
+            "role_id" => 2,
+            "nama_depan" => "officer",
+            "nama_belakang" => "officer",
             "nik" => rand(1000000000000000, 9999999999999999),
             "password" => bcrypt('123456'),
-            "nomer_tlpn" => "0896728274",
+            "nomer_hp" => "0896728274",
+            "jenis_kelamin" => "laki-laki",
             "role" => "officer",
             "status_aktif" => "aktif",
             "avatar" => "",
         ]);
         User::create([
-            "nama" => "tim analis",
+            "role_id" => 3,
+            "nama_depan" => "tim analis",
+            "nama_belakang" => "tim analis",
             "nik" => rand(1000000000000000, 9999999999999999),
             "password" => bcrypt('123456'),
-            "nomer_tlpn" => "0896728274",
+            "nomer_hp" => "0896728274",
+            "jenis_kelamin" => "laki-laki",
             "role" => "tim_analis",
             "status_aktif" => "aktif",
             "avatar" => "",
@@ -50,19 +59,25 @@ class Userseeder extends Seeder
 
 
         User::create([
-            "nama" => "manajer",
+            "role_id" => 6,
+            "nama_depan" => "manajer",
+            "nama_belakang" => "manajer",
             "nik" => rand(1000000000000000, 9999999999999999),
             "password" => bcrypt('123456'),
-            "nomer_tlpn" => "089672884033",
+            "nomer_hp" => "089672884033",
+            "jenis_kelamin" => "laki-laki",
             "role" => "manajer",
             "status_aktif" => "aktif",
             "avatar" => "",
         ]);
         User::create([
-            "nama" => "supervisor",
+            "role_id" => 5,
+            "nama_depan" => "supervisor",
+            "nama_belakang" => "supervisor",
             "nik" => rand(1000000000000000, 9999999999999999),
             "password" => bcrypt('123456'),
-            "nomer_tlpn" => "089673434334",
+            "nomer_hp" => "089673434334",
+            "jenis_kelamin" => "laki-laki",
             "role" => "supervisor",
             "status_aktif" => "aktif",
             "avatar" => "",

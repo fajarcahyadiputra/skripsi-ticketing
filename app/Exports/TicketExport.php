@@ -23,7 +23,7 @@ class TicketExport implements FromView, WithEvents
         $this->params = $params;
         $startDate = Carbon::createFromFormat('Y-m-d', $params["start_date"]);
         $endDate = Carbon::createFromFormat('Y-m-d', $params["end_date"]);
-        $this->tickets = Ticket::with("logBefore")->with("logAfter")->with("agent")->whereIn("status_tiket", ["closed","dispatch"])->whereBetween('created_at', [$startDate, $endDate])->get();
+        $this->tickets = Ticket::with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereBetween('created_at', [$startDate, $endDate])->get();
     }
     public function view(): View
     {

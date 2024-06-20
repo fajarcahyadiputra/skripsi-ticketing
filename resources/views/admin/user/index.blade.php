@@ -17,6 +17,7 @@
                             <tr style="color: white">
                                 <th>No</th>
                                 <th>Nama karyawan</th>
+                                <th>Role</th>
                                 <th>NIK</th>
                                 <th>Email</th>
                                 <th>perusahaan</th>
@@ -30,20 +31,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($agents as $no => $dt)
+                            @foreach ($users as $no => $dt)
                                 @php
-                                    $totalTiket = \App\Models\Ticket::where('agent_id', $dt->id)
+                                    $totalTiket = \App\Models\Ticket::where('user_id', $dt->id)
                                         ->get()
                                         ->count();
                                 @endphp
                                 <tr>
                                     <td>{{ $no + 1 }}</td>
                                     <td>{{ $dt->nama_depan . ' ' . $dt->nama_belakang }}</td>
+                                    <td>{{ $dt->roleUser->role }}</td>
                                     <td>{{ $dt->nik }}</td>
                                     <td>{{ $dt->email }}</td>
                                     <td>{{ $dt->perusahaan }}</td>
-                                    <td>{{ $dt->user->nama }}</td>
-                                    <td>{{ $dt->user->nama }}</td>
+                                    <td>{{ $dt->supervisor }}</td>
+                                    <td>{{ $dt->manager }}</td>
                                      <td><img width="50"
                                             src="{{ $dt->avatar ? env('APP_URL') . $dt->avatar : 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png' }}"
                                             alt="user image"></td>
@@ -113,6 +115,16 @@
                             <input required type="type" name="nama_belakang" id="nama_belakang" class="form-control">
                         </div>
                         <div class="form-group">
+                            <label for="role">Role</label>
+                            <select required name="role" id="role" class="custom-select">
+                                <option value="" disabled hidden selected>-- Piliih Role --</option>
+                                @foreach($roles as $role)
+                                    <option value="{{$role->id}}">{{$role->role}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="jenis_kelamin">Jenis Kelamin</label>
                             <select required name="jenis_kelamin" id="jenis_kelamin" class="custom-select">
                                 <option value="" disabled hidden selected>-- Piliih Jenis Kelamin --</option>
@@ -143,6 +155,14 @@
                         <div class="form-group">
                             <label for="domisili">Alamat Domisili</label>
                             <textarea required class="form-control" name="domisili" id="domisili" cols="30" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="manager">Manager</label>
+                            <input required type="text" name="manager" id="manager" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="supervisor">Supervisor</label>
+                            <input required type="text" name="supervisor" id="supervisor" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="avatar">Avatar</label>
@@ -230,7 +250,7 @@
                             return false;
                         } else {
                             $.ajax({
-                                url: '/agent',
+                                url: '/user',
                                 data: data,
                                 dataType: 'json',
                                 processData: false,
@@ -239,24 +259,25 @@
                                 async: true,
                                 type: 'post',
                                 success: function(hasil) {
-                                    if (hasil) {
-                                        $('#modalTambah').modal('hide')
-                                        Swal.fire(
-                                            'sukses',
-                                            'sukses menambah data',
-                                            'success'
-                                        )
-                                    } else {
-                                        Swal.fire(
-                                            'Gagal',
-                                            'gagal menambah data',
-                                            'error'
-                                        )
-                                    }
+                                    console.log(hasil);
+                                    // if (hasil) {
+                                    //     $('#modalTambah').modal('hide')
+                                    //     Swal.fire(
+                                    //         'sukses',
+                                    //         'sukses menambah data',
+                                    //         'success'
+                                    //     )
+                                    // } else {
+                                    //     Swal.fire(
+                                    //         'Gagal',
+                                    //         'gagal menambah data',
+                                    //         'error'
+                                    //     )
+                                    // }
 
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 800);
+                                    // setTimeout(() => {
+                                    //     location.reload();
+                                    // }, 800);
                                 }
                             })
                         }
@@ -281,7 +302,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: `/agent/${id}`,
+                            url: `/user/${id}`,
                             method: 'delete',
                             data: {
                                 "_token": "{{ csrf_token() }}",
@@ -313,7 +334,7 @@
             $(document).on('click', '#btn-edit', function() {
                 const id = $(this).data('id');
                 $.ajax({
-                    url: `/agent/${id}`,
+                    url: `/user/${id}`,
                     method: 'GET',
                     dataType: 'json',
                     success: function(hasil) {
@@ -366,6 +387,14 @@
                             <textarea required class="form-control" name="domisili" id="domisili" cols="30" rows="3">${hasil.domisili}</textarea>
                         </div>
                         <div class="form-group">
+                            <label for="manager">Manager</label>
+                            <input required type="text" name="manager" id="manager" value="${hasil.manager}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="supervisor">Supervisor</label>
+                            <input required type="text" name="supervisor" value="${hasil.supervisor}" id="supervisor" class="form-control">
+                        </div>
+                        <div class="form-group">
                         <label class="d-block">Image</label>
                         <img class="d-block" width="150" src="{{ env('APP_URL') }}${hasil.avatar}" alt="image sub">
                         <div id="box-image">
@@ -407,7 +436,7 @@
                 }
                 const id = $('#id').val();
                 $.ajax({
-                    url: '/agent/' + id,
+                    url: '/user/' + id,
                     data:  data,
                     dataType: 'json',
                     method: "POST",

@@ -46,7 +46,7 @@
                             @foreach ($tickets as $no => $dt)
                                 <tr>
                                     <td>{{ $no + 1 }}</td>
-                                    <td>{{ $dt->agent->nama_depan . ' ' . $dt->agent->nama_belakang }}</td>
+                                    <td>{{ $dt->user->nama_depan . ' ' . $dt->user->nama_belakang }}</td>
                                     {{-- <td>{{ $dt->no_inet }}</td> --}}
                                     <td>{{ $dt->created_at }}</td>
                                     <td>{{ $dt->no_tiket }}</td>

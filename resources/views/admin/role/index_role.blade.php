@@ -6,7 +6,7 @@
 
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between">
-                <h5>DATA USER</h5>
+                <h5>DATA ROLE</h5>
                 @if (auth()->user()->role == 'supervisor')
                     <button data-toggle="modal" data-target="#modalTambahData" class="btn btn-success btn-sm">Tambah</button>
                 @endif
@@ -26,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $no => $dt)
+                            @foreach ($roles as $no => $dt)
                                 <tr>
                                     <td class="align-middle">{{ $no + 1 }}</td>
                                     <td class="align-middle">{{ $dt->nama }}</td>
@@ -91,19 +91,8 @@
                             <input required type="type" name="nama" id="nama" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="nik">NIK</label>
-                            <input type="type" name="nik" id="nik" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="level">Role</label>
-                            <select required name="level" id="level" class="custom-select">
-                                <option value="" disabled hidden selected>-- Piliih Role --</option>
-                                <option value="supervisor">Supervisor</option>
-                                <option value="agent">Apotoker</option>
-                                <option value="manajer">Manajer</option>
-                                <option value="tim_analis">Tim Analis</option>
-                                <option value="officer">Officer</option>
-                            </select>
+                            <label for="role">Role</label>
+                            <input type="type" name="role" id="role" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="status_aktif">Status Aktif</label>
@@ -113,22 +102,6 @@
                                 <option value="tidak">Tidak</option>
                             </select>
                         </div>
-                        {{-- <div class="form-group">
-                            <label for="nomer_tlpn">Nomer Telepon</label>
-                            <input required type="type" name="nomer_tlpn" id="nomer_tlpn" class="form-control">
-                        </div> --}}
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input required type="type" name="password" id="password" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="password_confirmation">Comfirm Password</label>
-                            <input required type="text" id="password_confirmation" class="form-control">
-                        </div>
-                        {{-- <div class="form-group">
-                            <label for="avatar">Avatar</label>
-                            <input type="file" name="avatar" id="avatar" class="form-control">
-                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -198,80 +171,37 @@
                 e.preventDefault();
                 const data = new FormData(document.querySelector('#formTambah'));
 
-                //check extensi avatar
-                // const foto = $('#avatar').val();
-                // if (!foto.match(/.(jpg|png|jpeg|gift)$/i)) {
-                //     Swal.fire(
-                //         'Opss',
-                //         'extensi file anda salah',
-                //         'warning'
-                //     )
-                //     return false;
-                // }
-                if ($('#password_confirmation').val() != $("#password").val()) {
-                    Swal.fire(
-                        'Opss',
-                        'Password tidak sama',
-                        'warning'
-                    )
-                    return false;
-                }
-
-
                 $.ajax({
-                    url: `/user`,
-                    method: 'post',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        nik: $('#nik').val(),
-                        checknik: true
-                    },
+                    url: '/role',
+                    data: data,
                     dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    async: true,
+                    type: 'post',
                     success: function(hasil) {
                         if (hasil) {
+                            $('#modalTambah').modal('hide')
                             Swal.fire(
-                                'Opss',
-                                'nik already exists',
-                                'warning'
+                                'sukses',
+                                'sukses menambah data',
+                                'success'
                             )
-                            return false;
                         } else {
-                            $.ajax({
-                                url: '/user',
-                                data: data,
-                                dataType: 'json',
-                                processData: false,
-                                contentType: false,
-                                cache: false,
-                                async: true,
-                                type: 'post',
-                                success: function(hasil) {
-                                    if (hasil) {
-                                        $('#modalTambah').modal('hide')
-                                        Swal.fire(
-                                            'sukses',
-                                            'sukses menambah data',
-                                            'success'
-                                        )
-                                    } else {
-                                        Swal.fire(
-                                            'Gagal',
-                                            'gagal menambah data',
-                                            'error'
-                                        )
-                                    }
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 800);
-
-
-                                }
-                            })
+                            Swal.fire(
+                                'Gagal',
+                                'gagal menambah data',
+                                'error'
+                            )
                         }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 800);
+
+
                     }
                 })
-
-
 
             })
             //end
@@ -290,7 +220,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: `/user/${id}`,
+                            url: `/role/${id}`,
                             method: 'delete',
                             data: {
                                 "_token": "{{ csrf_token() }}",
@@ -323,7 +253,7 @@
             $(document).on('click', '#btn-edit', function() {
                 const id = $(this).data('id');
                 $.ajax({
-                    url:`/user/${id}`,
+                    url:`/role/${id}`,
                     method: 'GET',
                     dataType: 'json',
                     success: function(hasil) {
@@ -336,20 +266,9 @@
                         <input type="hidden" id="id" value="${hasil.id}">
                     </div>
                     <div class="form-group">
-                            <label for="nik">NIK</label>
-                            <input type="type" name="nik" id="nik" class="form-control" value="${hasil.nik}">
-                        </div>
-                        <div class="form-group">
-                            <label for="level">Role</label>
-                            <select required name="level" id="level" class="custom-select">
-                                <option value="" disabled hidden selected>-- Piliih Role --</option>
-                                <option ${hasil.role === "supervisor"?"selected":""} value="supervisor">Supervisor</option>
-                                <option ${hasil.role === "agent"?"selected":""} value="agent">Apotoker</option>
-                                <option ${hasil.role === "manajer"?"selected":""} value="manajer">Manajer</option>
-                                <option ${hasil.role === "tim_analis"?"selected":""} value="tim_analis">Tim Analis</option>
-                                <option ${hasil.role === "officer"?"selected":""} value="officer">Officer</option>
-                            </select>
-                        </div>
+                        <label for="role">Role</label>
+                        <input type="type" name="role" id="role" value="${hasil.role}" class="form-control">
+                    </div>
                     <div class="form-group">
                         <label for="status_aktif">Status Aktif</label>
                         <select name="status_aktif" id="status_aktif" class="custom-select">
@@ -481,20 +400,10 @@
                 const data = new FormData(document.querySelector('#formEditData'));
                 data.append('_method', 'PUT')
                 //check extensi avatar
-                const foto = $('#avatar').val();
-                if (foto != undefined && foto != "") {
-                    if (!foto.match(/.(jpg|png|jpeg|gift)$/i)) {
-                        Swal.fire(
-                            'Opss',
-                            'extensi file anda salah',
-                            'warning'
-                        )
-                        return false;
-                    }
-                }
+
                 const id = $('#id').val();
                 $.ajax({
-                    url: '/user/' + id,
+                    url: '/role/' + id,
                     data: data,
                     dataType: 'json',
                     processData: false,

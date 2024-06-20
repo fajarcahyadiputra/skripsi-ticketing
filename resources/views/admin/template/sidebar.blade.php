@@ -30,7 +30,7 @@
                 <li class="nav-item {{ request()->is('user') ? 'active' : '' }}">
                     <a  style="color: white" class="nav-link {{ request()->is('user') ? 'text-primary' : '' }}" href="/user">
                         <i style="color: white" class="fas fa-users"></i>
-                        <span>User Role</span></a>
+                        <span>Users</span></a>
                 </li>
                 <hr >
             @endif
@@ -39,9 +39,9 @@
                     auth()->user()->role == 'officier' ||
                     auth()->user()->role == 'supervisor')
                 <li class="nav-item {{ request()->is('agent') ? 'active' : '' }}">
-                    <a style="color: white" class="nav-link {{ request()->is('agent') ? 'text-primary' : '' }}" href="/agent">
+                    <a style="color: white" class="nav-link {{ request()->is('role') ? 'text-primary' : '' }}" href="/role">
                         <i style="color: white" class="fas fa-users"></i>
-                        <span>Supervisorplus</span></a>
+                        <span>Role</span></a>
                 </li>
                 <hr >
             @endif
@@ -92,18 +92,15 @@
                             <img class="img-profile rounded-circle"
                                 src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
                                 style="max-width: 60px">
-                            <span class="ml-2 d-none d-lg-inline text-white small">{{ auth()->user()->nama }}</span>
+                            <span class="ml-2 d-none d-lg-inline text-white small text-dark">{{ auth()->user()->nama_depan }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
                             <div class="dropdown-divider"></div>
-                            @if (auth()->user()->role == 'agent')
-                                <a class="dropdown-item" href="{{ route('detailProfil', auth()->user()->id) }}"><i
+                            
+                                <a class="dropdown-item" href="{{ route('detailProfilUser', auth()->user()->id) }}"><i
                                         class="fas fa-user-circle mr-2 text-gray-400"></i>Profile</a>
-                            @else
-                            <a class="dropdown-item" href="{{ route('detailProfilUser', auth()->user()->id) }}"><i
-                                class="fas fa-user-circle mr-2 text-gray-400"></i>Profile</a>
-                            @endif
+                           
 
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf
