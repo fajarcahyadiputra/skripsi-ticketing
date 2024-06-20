@@ -30,7 +30,7 @@
                 <li class="nav-item {{ request()->is('user') ? 'active' : '' }}">
                     <a  style="color: white" class="nav-link {{ request()->is('user') ? 'text-primary' : '' }}" href="/user">
                         <i style="color: white" class="fas fa-users"></i>
-                        <span>Users</span></a>
+                        <span>Supervisorplus</span></a>
                 </li>
                 <hr >
             @endif
@@ -41,7 +41,7 @@
                 <li class="nav-item {{ request()->is('agent') ? 'active' : '' }}">
                     <a style="color: white" class="nav-link {{ request()->is('role') ? 'text-primary' : '' }}" href="/role">
                         <i style="color: white" class="fas fa-users"></i>
-                        <span>Role</span></a>
+                        <span>User Role</span></a>
                 </li>
                 <hr >
             @endif

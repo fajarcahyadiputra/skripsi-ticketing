@@ -200,7 +200,7 @@ a span:nth-child(4) {
 
 <style>
     .bg-login-image {
-        background: url({{ URL::asset('foto/background.jpg') }});
+        background: url({{ URL::asset('foto/image.jpeg') }});
         background-position: center;
         background-size: cover;
         /* widtth: 1oo% */
@@ -220,10 +220,10 @@ a span:nth-child(4) {
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row" style="height: 600px">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                            <div class="col-lg-7 d-none d-lg-block bg-login-image">
                                 {{-- <img src="{{ URL::asset('foto/background.jpg') }}" alt="background"> --}}
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">ASSURANCE</h1>
