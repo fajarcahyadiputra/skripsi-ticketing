@@ -34,7 +34,12 @@ class TicketController extends Controller
     }
     public function create()
     {
-        $agents = User::where("role_id", 1)->get();
+        if (auth()->user()->role == 1){
+            $agents = User::where("id", auth()->user()->id)->get();
+        }else{
+            $agents = User::where("role_id", 1)->get();
+        }
+        
         $listSTO = Ticket::listSTO();
         $listAlasanDispatch = Ticket::listAlasanDispatch();
         $userID = auth()->user()->id;
@@ -177,6 +182,7 @@ class TicketController extends Controller
         $endDate = Request()->input("end_date");
         // $startDate = "2021-06-01";
         // $endDate = "2021-06-01";
+        
         return Excel::download(new TicketExport(["start_date" => $startDate, "end_date" => $endDate]), 'ticket.xlsx');
     }
     function fillterByDate(){

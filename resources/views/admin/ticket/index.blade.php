@@ -15,8 +15,8 @@
                         <button class="btn btn-success" type="submit">Fillter</button>
                     </form>
                     <form action="{{ route('tickeTexportExcel') }}" method="GET" class="d-flex mr-2">
-                        <input hidden required class="form-control" value="{{request()->input("start_date")}}" type="date" name="start_date">
-                        <input hidden required class="form-control" value="{{request()->input("end_date")}}" type="date" name="end_date">
+                        <input hidden  class="form-control" value="{{request()->input("start_date")}}" type="date" name="start_date">
+                        <input hidden  class="form-control" value="{{request()->input("end_date")}}" type="date" name="end_date">
                         <button class="btn btn-success" type="submit">Export</button>
                     </form>
                     <a class="btn btn-primary" href="{{ route('ticket.create') }}">create</a>

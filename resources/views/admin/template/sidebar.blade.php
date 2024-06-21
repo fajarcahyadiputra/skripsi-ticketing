@@ -23,10 +23,10 @@
             @endif --}}
             <hr style="background-color: red !important">
     
-            @if (auth()->user()->role == 4 ||
-            auth()->user()->role == 3 ||
-            auth()->user()->role == 2 ||
-            auth()->user()->role == 5)
+            @if (auth()->user()->role_id == 4 ||
+            auth()->user()->role_id == 3 ||
+            auth()->user()->role_id == 2 ||
+            auth()->user()->role_id == 5)
                 <li class="nav-item {{ request()->is('user') ? 'active' : '' }}">
                     <a  style="color: white" class="nav-link {{ request()->is('user') ? 'text-primary' : '' }}" href="/user">
                         <i style="color: white" class="fas fa-users"></i>
@@ -34,10 +34,10 @@
                 </li>
                 <hr >
             @endif
-            @if (auth()->user()->role == 4 ||
-                    auth()->user()->role == 3 ||
-                    auth()->user()->role == 2 ||
-                    auth()->user()->role == 5)
+            @if (auth()->user()->role_id == 4 ||
+                    auth()->user()->role_id == 3 ||
+                    auth()->user()->role_id == 2 ||
+                    auth()->user()->role_id == 5)
                 <li class="nav-item {{ request()->is('agent') ? 'active' : '' }}">
                     <a style="color: white" class="nav-link {{ request()->is('role') ? 'text-primary' : '' }}" href="/role">
                         <i style="color: white" class="fas fa-users"></i>
@@ -46,11 +46,11 @@
                 <hr >
             @endif
     
-            @if (auth()->user()->role == 1 ||
-                     auth()->user()->role == 4 ||
-                    auth()->user()->role == 3 ||
-                    auth()->user()->role == 2 ||
-                    auth()->user()->role == 5)
+            @if (auth()->user()->role_id == 1 ||
+                     auth()->user()->role_id == 4 ||
+                    auth()->user()->role_id == 3 ||
+                    auth()->user()->role_id == 2 ||
+                    auth()->user()->role_id == 5)
                 <li class="nav-item {{ request()->is('ticket') ? 'active' : '' }}">
                     <a style="color: white" class="nav-link {{ request()->is('ticket') ? 'text-primary' : '' }}" href="/ticket">
                         <i style="color: white" class="fas fa-sitemap"></i>
