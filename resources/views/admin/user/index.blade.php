@@ -259,25 +259,25 @@
                                 async: true,
                                 type: 'post',
                                 success: function(hasil) {
-                                    console.log(hasil);
-                                    // if (hasil) {
-                                    //     $('#modalTambah').modal('hide')
-                                    //     Swal.fire(
-                                    //         'sukses',
-                                    //         'sukses menambah data',
-                                    //         'success'
-                                    //     )
-                                    // } else {
-                                    //     Swal.fire(
-                                    //         'Gagal',
-                                    //         'gagal menambah data',
-                                    //         'error'
-                                    //     )
-                                    // }
+                                    // console.log(hasil);
+                                    if (hasil) {
+                                        $('#modalTambah').modal('hide')
+                                        Swal.fire(
+                                            'sukses',
+                                            'sukses menambah data',
+                                            'success'
+                                        )
+                                    } else {
+                                        Swal.fire(
+                                            'Gagal',
+                                            'gagal menambah data',
+                                            'error'
+                                        )
+                                    }
 
-                                    // setTimeout(() => {
-                                    //     location.reload();
-                                    // }, 800);
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 800);
                                 }
                             })
                         }
