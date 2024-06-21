@@ -49,7 +49,7 @@
                                 value="{{ $user->email }}">
                         </div>
                         <div class="form-group">
-                            <button type="button" data-id="{{ $user->user_id }}" id="btn-change-password"
+                            <button type="button" data-id="{{ $user->id }}" id="btn-change-password"
                                 class="btn btn-warning btn-sm"><i class="fas fa-unlock-alt mr-2"></i>Edit Password?</button>
                         </div>
                         <div class="form-group">

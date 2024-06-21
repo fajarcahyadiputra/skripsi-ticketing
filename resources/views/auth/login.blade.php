@@ -223,8 +223,8 @@ a span:nth-child(4) {
                             <div class="col-lg-7 d-none d-lg-block bg-login-image">
                                 {{-- <img src="{{ URL::asset('foto/background.jpg') }}" alt="background"> --}}
                             </div>
-                            <div class="col-lg-4">
-                                <div class="p-5">
+                            <div class="col-lg-5">
+                                <div style="d-flex justify-content" class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">ASSURANCE</h1>
                                         @if (session()->has('pesan'))

@@ -415,23 +415,23 @@
                     dataType: 'json',
                     type: 'post',
                     success: function(hasil) {
-                        console.log(hasil);
-                        // if (hasil) {
-                        //     $('#modalTambah').modal('hide')
-                        //     Swal.fire(
-                        //         'sukses',
-                        //         'sukses menambah data',
-                        //         'success'
-                        //     ).then(() => {
-                        //         document.location.href = '/ticket';
-                        //     })
-                        // } else {
-                        //     Swal.fire(
-                        //         'Gagal',
-                        //         'gagal menambah data',
-                        //         'error'
-                        //     )
-                        // }
+
+                        if (hasil) {
+                            $('#modalTambah').modal('hide')
+                            Swal.fire(
+                                'sukses',
+                                'sukses menambah data',
+                                'success'
+                            ).then(() => {
+                                document.location.href = '/ticket';
+                            })
+                        } else {
+                            Swal.fire(
+                                'Gagal',
+                                'gagal menambah data',
+                                'error'
+                            )
+                        }
                     }
                 })
             })
