@@ -57,6 +57,7 @@ class UserController extends Controller
             }
             $data["role_id"] = $data["role"];
             $data["password"] = bcrypt($password);
+            $data["manajer"] = $data["manager"];
             $create = User::create($data);
             DB::commit();
 
@@ -104,6 +105,7 @@ class UserController extends Controller
                 $data['avatar'] = "assets/image/user/$fileName";
             }
         }
+        $data["manajer"] = $data["manager"];
         $user->fill($data);
         if ($user->save()) {
             return response()->json(true);

@@ -374,9 +374,14 @@
                             <label for="tanggal_lahir">Tanggal Lahir</label>
                             <input required type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" value="${hasil.tanggal_lahir}">
                         </div>
-                        <div class="form-group">
-                            <label for="jabatan">Jabatan</label>
-                            <input required type="text" name="jabatan" id="jabatan" class="form-control" value="${hasil.jabatan}">
+                         <div class="form-group">
+                            <label for="role">Role</label>
+                            <select required name="role" id="role" class="custom-select">
+                                <option value="" disabled hidden selected>-- Piliih Role --</option>
+                                @foreach($roles as $role)
+                                    <option ${@php echo $role->id @endphp  == hasil.role_id?"selected":""} value="{{$role->id}}">{{$role->role}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="nomer_hp">Nomer HP</label>
