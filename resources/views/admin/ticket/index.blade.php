@@ -19,7 +19,7 @@
                         <input hidden required class="form-control" value="{{request()->input("end_date")}}" type="date" name="end_date">
                         <button class="btn btn-success" type="submit">Export</button>
                     </form>
-                    <a class="btn btn-primary" href="{{ route('ticket.create') }}">Cretae</a>
+                    <a class="btn btn-primary" href="{{ route('ticket.create') }}">create</a>
                 </div>
             </div>
             <div class="card-body">
