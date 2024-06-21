@@ -190,7 +190,11 @@ class TicketController extends Controller
         $endDate = Request()->input("end_date");
         $startDate = Carbon::createFromFormat('Y-m-d', $startDate);
         $endDate = Carbon::createFromFormat('Y-m-d', $endDate);
-        $tickets = Ticket::with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereBetween('created_at', [$startDate, $endDate])->get();
+        if ($startDate == $endDate){
+            $tickets = Ticket::with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereDate("created_at", $startDate)->get();
+        }else{
+            $tickets = Ticket::with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereBetween('created_at', [$startDate, $endDate])->get();
+        }
         return view('admin.ticket.index', compact('tickets'));
     }
 }
