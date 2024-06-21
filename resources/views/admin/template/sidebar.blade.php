@@ -9,7 +9,7 @@
         <div >
             <li class="nav-item p-2" style="font-size: 15px">
                 <center><b>
-                        <p style="color: white !important" style="font-size: 12px">{{ auth()->user()->role }}</p>
+                        {{-- <p style="color: white !important" style="font-size: 12px">{{ auth()->user()->role }}</p> --}}
                     </b></center>
             </li>
             <hr >

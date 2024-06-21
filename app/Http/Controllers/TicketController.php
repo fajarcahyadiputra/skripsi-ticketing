@@ -22,7 +22,7 @@ class TicketController extends Controller
     public function index()
     {
         $monthNow = date("m");
-        if(auth()->user()->role == "agent"){
+        if(auth()->user()->role == 1){
             $tickets =Ticket::whereMonth('created_at', '=', $monthNow)->with("user")->wherehas("user", function($query) {
                 $query->where("user_id", auth()->user()->id);
             })->whereMonth('created_at', '=',$monthNow)->get();
