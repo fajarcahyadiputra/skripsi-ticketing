@@ -19,7 +19,9 @@
                         <input hidden  class="form-control" value="{{request()->input("end_date")}}" type="date" name="end_date">
                         <button class="btn btn-success" type="submit">Export</button>
                     </form>
+                    @if(auth()->user()->role_id != 5)
                     <a class="btn btn-primary" href="{{ route('ticket.create') }}">create</a>
+                    @endif
                 </div>
             </div>
             <div class="card-body">

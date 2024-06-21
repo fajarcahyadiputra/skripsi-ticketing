@@ -22,7 +22,7 @@
                                 <th>Email</th>
                                 <th>perusahaan</th>
                                 <th>Supervisor</th>
-                                <th>Manajer</th>
+                                <th>Manager</th>
                                 <th>Avatar</th>
                                 <th>Summery Ticket</th>
                                 {{-- @if (auth()->user()->role == 'kasir' || auth()->user()->role == 'manager') --}}
@@ -45,7 +45,7 @@
                                     <td>{{ $dt->email }}</td>
                                     <td>{{ $dt->perusahaan }}</td>
                                     <td>{{ $dt->supervisor }}</td>
-                                    <td>{{ $dt->manager }}</td>
+                                    <td>{{ $dt->manajer }}</td>
                                      <td><img width="50"
                                             src="{{ $dt->avatar ? env('APP_URL') . $dt->avatar : 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png' }}"
                                             alt="user image"></td>
