@@ -188,13 +188,33 @@ class TicketController extends Controller
     function fillterByDate(){
         $startDate = Request()->input("start_date");
         $endDate = Request()->input("end_date");
-        $startDate = Carbon::createFromFormat('Y-m-d', $startDate);
-        $endDate = Carbon::createFromFormat('Y-m-d', $endDate);
-        if ($startDate == $endDate){
-            $tickets = Ticket::with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereDate("created_at", $startDate)->get();
-        }else{
-            $tickets = Ticket::with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereBetween('created_at', [$startDate, $endDate])->get();
-        }
+        $witel = Request()->input("witel");
+
+        $tickets = Ticket::query();
+
+        $tickets->when($startDate, function($q) use($startDate, $endDate){
+            $startDate = Carbon::createFromFormat('Y-m-d', $startDate);
+            $endDate = Carbon::createFromFormat('Y-m-d', $endDate);
+            if ($startDate == $endDate){
+                $q->with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereDate("created_at", $startDate)->get();
+            }else{
+                $q->with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereBetween('created_at', [$startDate, $endDate])->get();
+            }
+            return $q;
+        })->when($witel, function($q) use($witel){
+            return $q->where("witel", $witel);
+        })->get();
+
+
+       $tickets = $tickets->get();
+
+
+
+        // if ($startDate == $endDate){
+        //     $tickets = Ticket::with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereDate("created_at", $startDate)->get();
+        // }else{
+        //     $tickets = Ticket::with("logBefore")->with("logAfter")->with("user")->whereIn("status_tiket", ["closed","dispatch"])->whereBetween('created_at', [$startDate, $endDate])->get();
+        // }
         return view('admin.ticket.index', compact('tickets'));
     }
 }

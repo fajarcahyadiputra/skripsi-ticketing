@@ -10,18 +10,32 @@
                 <div class="d-flex">
                     
                     <form action="{{ route('fillterByDate') }}" method="GET" class="d-flex mr-2">
-                        <input required class="form-control" value="" type="date" name="start_date">
-                        <input required class="form-control" type="date" name="end_date">
+                        <input required class="form-control" value="{{request()->input("start_date")}}" type="date" name="start_date">
+                        <input required class="form-control" value="{{request()->input("end_date")}}" type="date" name="end_date">
+                        <select name="witel" id="witel" class="form-control">
+                            <option value="" disabled hidden selected>-- Piliih Witel --</option>
+                            <option value="JAKBAR">JAKBAR</option>
+                            <option value="JAKSEL">JAKSEL</option>
+                            <option value="JAKTIM">JAKTIM</option>
+                            <option value="BANTEN">BANTEN</option>
+                            <option value="BOGOR">BOGOR</option>
+                            <option value="JAKPUS">JAKPUS</option>
+                            <option value="JAKUT">JAKUT</option>
+                            <option value="TANGGERANG">TANGGERANG</option>
+                            <option value="BEKASI">BEKASI</option>
+                        </select>
                         <button class="btn btn-success" type="submit">Fillter</button>
                     </form>
                     <form action="{{ route('tickeTexportExcel') }}" method="GET" class="d-flex mr-2">
                         <input hidden  class="form-control" value="{{request()->input("start_date")}}" type="date" name="start_date">
                         <input hidden  class="form-control" value="{{request()->input("end_date")}}" type="date" name="end_date">
+               
                         <button class="btn btn-success" type="submit">Export</button>
                     </form>
                     @if(auth()->user()->role_id != 5)
                     <a class="btn btn-primary" href="{{ route('ticket.create') }}">create</a>
                     @endif
+                    
                 </div>
             </div>
             <div class="card-body">
